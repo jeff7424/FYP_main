@@ -321,14 +321,14 @@ public class TemporaryMovement : MonoBehaviour
         catAnim.SetFloat("vSpeed", vertical);
     }
 
-    //uses raycast to check if player is grounded
+    // uses raycast to check if player is grounded
     void checkGroundStatus()
     {
         RaycastHit hitInfo;
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         // helper to visualise the ground check ray in the scene view
         Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.up * 0.1f) + (Vector3.down * m_GroundCheckDistance));
-        #endif
+#endif
         // 0.1f is a small offset to start the ray from inside the character
         // it is also good to note that the transform position in the sample assets is at the base of the character
         if (Physics.Raycast(transform.position + (Vector3.up * 0.1f), Vector3.down, out hitInfo, m_GroundCheckDistance))
@@ -345,13 +345,13 @@ public class TemporaryMovement : MonoBehaviour
     {
         if (other.transform.parent != null)
         {
-            if ((Input.GetKeyDown(KeyCode.Return) && other.transform.parent.tag == "ball" || other.transform.parent.tag == "cube"))
+            if ((Input.GetKeyDown(KeyCode.Return) && other.transform.parent.CompareTag ("ball") || other.transform.parent.CompareTag ("cube")))
             {
                 other.transform.parent.GetComponent<Rigidbody>().AddForce(Vector3.forward * throwForce, ForceMode.Force);
                 other.transform.GetComponentInParent<breakableObject>().ObjectFalling();
             }
 
-            if (other.transform.parent.tag == "trap")
+            if (other.transform.parent.CompareTag ("trap"))
             {
 
             }
@@ -360,7 +360,7 @@ public class TemporaryMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.collider.tag == "trap")
+        if (col.collider.CompareTag ("trap"))
         {
             breakableObject trap = col.collider.transform.GetComponent<breakableObject>();
             trap.makeSound = true;
@@ -370,7 +370,7 @@ public class TemporaryMovement : MonoBehaviour
     
     void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.tag == "ladder")
+        if (coll.gameObject.CompareTag ("ladder"))
         {
             if (Vector3.Distance(this.transform.position, coll.transform.position) < 1.5f)
             {
@@ -382,7 +382,7 @@ public class TemporaryMovement : MonoBehaviour
 
     void OnTriggerExit(Collider coll)
     {
-        if (coll.gameObject.tag == "ladder")
+        if (coll.gameObject.CompareTag ("ladder"))
         {
             onLadder = false;
             catAnim.SetBool("isClimbing", false);
@@ -426,6 +426,7 @@ public class TemporaryMovement : MonoBehaviour
             }
         }
     }
+
     public void resetKeys()
     {
         keyPossessed = new int[4];

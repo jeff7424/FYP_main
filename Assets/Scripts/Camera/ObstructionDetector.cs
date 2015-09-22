@@ -9,12 +9,16 @@ public class ObstructionDetector : MonoBehaviour {
 	//private Wall m_LastWall;
 	private List<Wall> lastWalls = new List<Wall>();
     Vector3 direction;
+
 	void FixedUpdate()
 	{
+		// If the list is not empty
 		if (lastWalls != null) {
+			// Set all the walls to normal
 			foreach (Wall wall in lastWalls) {
 				wall.SetToNormal ();
 			}
+			// Remove all walls from the list
 			lastWalls.Clear();
 		}
 

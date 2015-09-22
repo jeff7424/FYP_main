@@ -10,15 +10,9 @@ using System.Collections;
 
 public class checkPoint: MonoBehaviour
 {
-	public bool checkPointActivated = false; // if the check point has been reached or not
-	public bool checkPointActivated_2 = false;
 	public bool sendBack;
-    public GameObject checkPointPosition; // Position of the check point
-    public GameObject checkPointPosition_2; // Position of the check point
-	public GameObject player;
-    public Transform startPosition;
-    
-    private string currentLevel; // the current level
+
+	private GameObject player;
     private GameObject[] allEnemies; // needed to reset enemies' positions
     private GameObject[] allHunters; // Hunters need to be destroyed on player death
     private GameObject[] allFatDogs;
@@ -35,79 +29,66 @@ public class checkPoint: MonoBehaviour
 	private TemporaryMovement playerScript;
 	private breakableObject bo;
 
+	// Working on new checkpoint system with more flexibility
+	// For checkpointPosition, please insert startingPoint in the first column in the array
+	// *NOTE: Insert position, not the trigger 
+	[Tooltip("Insert the start position and the checkpoints position here. Start position is a must to prevent errors")]
+	public GameObject[] checkpointPosition;	// Store all the checkpoint spawning positions into this array
+	private int checkpointNumber;			// Use as index to get from the checkpointPosition array
 
     void Start()
     {	
 		sendBack = false;
-        currentLevel = Application.loadedLevelName; // get current level name
-		chaseTransScript = GameObject.Find ("BGM").GetComponent<chaseTransition>();//get chase music transition script
-		rb = GetComponent<Rigidbody> ();
-	}
 
-    void OnTriggerEnter(Collider other) // turns the check point on
+		player = this.gameObject;
+		rb = GetComponent<Rigidbody> ();
+		chaseTransScript = GameObject.Find ("BGM").GetComponent<chaseTransition>();	// get chase music transition script
+		playerScript = player.GetComponent<TemporaryMovement>();
+
+		checkpointNumber = 0;	// No checkpoint has pass through yet, therefore 0
+	}
+	
+	void OnTriggerEnter(Collider other) // turns the check point on
     {
-        if (other.gameObject.name == "checkPoint_Trigger")
-        {
-            this.checkPointActivated = true;
-        }
-        else if (other.gameObject.name == "checkPoint_Trigger_2")
-        {
-            this.checkPointActivated_2 = true;
-        }
+		// If gameobject tag is checkpoint
+		if (other.gameObject.CompareTag ("checkPoint")) 
+		{
+			// Increase the checkpointNumber to get which checkpoint has the player pass through
+			checkpointNumber++;
+
+			// Deactivate the gameObject of the checkpoint such that player won't collide with the checkpoint again and increase the checkpointNumber
+			other.gameObject.SetActive(false);
+		}
     }
 
     void OnCollisionEnter(Collision other) // On collision with an enemy
     {
         if ((other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog")) )
         {
-			// if check point has not been reached
-			if ( checkPointActivated == false && checkPointActivated_2 == false )
-			{
-	            if (other.gameObject.CompareTag ("enemy"))
-	            {
-	                other.gameObject.GetComponent<enemyPathfinding>().agent.velocity = Vector3.zero;
-	                other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-	                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-	            }
-	            else if (other.gameObject.CompareTag ("fatDog"))
-	            {
-	                other.gameObject.GetComponent<fatDogAi>().agent.velocity = Vector3.zero;
-	                other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-	                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-	            }
-
-	            this.transform.position = startPosition.transform.position;
-	            resetLevel();
-	            //Application.LoadLevel(currentLevel);
-			}
-			else if (checkPointActivated == true || checkPointActivated_2 == true)
-			{
-				if (other.gameObject.CompareTag ("enemy"))
-				{
-					other.gameObject.GetComponent<enemyPathfinding>().agent.velocity = Vector3.zero;
-				}
-				if (checkPointActivated_2)
-				{
-					this.transform.position = checkPointPosition_2.transform.position;
-				}
-				if (checkPointActivated)
-				{
-					this.transform.position = checkPointPosition.transform.position;
-				} 
-				resetLevel();
-			}
+			// Stop the enemy when collided
+            if (other.gameObject.CompareTag ("enemy"))
+            {
+                other.gameObject.GetComponent<enemyPathfinding>().agent.velocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            }
+            else if (other.gameObject.CompareTag ("fatDog"))
+            {
+                other.gameObject.GetComponent<fatDogAi>().agent.velocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            }
+            this.transform.position = checkpointPosition[checkpointNumber].transform.position;
+            resetLevel();
         }
     }
-
-    //public static bool isNull(System.Object aObj)
-    //{
-    //    return aObj == null || aObj.Equals(null);
-    //}
-
+	
     void resetLevel()
     {
+		//==============================================//
+		//	Change for each to for loop to reduce GC	//
+		//==============================================//
         sendBack = true;
-        playerScript = player.GetComponent<TemporaryMovement>();
         playerScript.resetKeys();
 
 		// Get all the objects from the scene using tag (Might have performance impact, if have time find a better solution)
@@ -122,30 +103,37 @@ public class checkPoint: MonoBehaviour
 		//resets BGM.
 		chaseTransScript.resetChaseTrans(); 
 
-        foreach(GameObject hunter in allHunters)
-        {
-            hunterScript = (huntingDog)hunter.GetComponent<huntingDog>();
-            hunterScript.selfDestruct();
-            //Destroy(hunter);
-        }
-//		for (int i = 0; i < allHunters.Length; i++) 
-//		{
-//			allHunters[i].GetComponent<huntingDog>().selfDestruct();
-//		}
-        foreach(GameObject fatDog in allFatDogs)
-        {
-            fatDogScript = (fatDogAi)fatDog.GetComponent<fatDogAi>();
-//            fatDogScript.agent.Stop();
-//            fatDogScript.agent.velocity = Vector3.zero;
-//            fatDogScript.GetComponent<Rigidbody>().velocity = Vector3.zero;
-//            fatDogScript.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-//            if (fatDogScript.respawnPosition != null)
-//            {
-//                fatDogScript.transform.position = fatDogScript.respawnPosition;
-//            }
-//            fatDogScript.stateManager(4);
+//        foreach(GameObject hunter in allHunters)
+//        {
+//            hunterScript = (huntingDog)hunter.GetComponent<huntingDog>();
+//            hunterScript.selfDestruct();
+//            //Destroy(hunter);
+//        }
+		for (int i = 0; i < allHunters.Length; i++) 
+		{
+			hunterScript = allHunters[i].GetComponent<huntingDog>();
+			hunterScript.selfDestruct();
+		}
+//        foreach(GameObject fatDog in allFatDogs)
+//        {
+//            fatDogScript = (fatDogAi)fatDog.GetComponent<fatDogAi>();
+////            fatDogScript.agent.Stop();
+////            fatDogScript.agent.velocity = Vector3.zero;
+////            fatDogScript.GetComponent<Rigidbody>().velocity = Vector3.zero;
+////            fatDogScript.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+////            if (fatDogScript.respawnPosition != null)
+////            {
+////                fatDogScript.transform.position = fatDogScript.respawnPosition;
+////            }
+////            fatDogScript.stateManager(4);
+//			// Reset func contains everything above
+//			fatDogScript.Reset ();
+//        }
+		for (int i = 0; i < allFatDogs.Length; i++) 
+		{
+			fatDogScript = allFatDogs[i].GetComponent<fatDogAi>();
 			fatDogScript.Reset ();
-        }
+		}
         foreach (GameObject enemy in allEnemies)
         {
 			script = (enemyPathfinding)enemy.GetComponent<enemyPathfinding>();
@@ -196,6 +184,7 @@ public class checkPoint: MonoBehaviour
             Destroy(sphere);
         }
 
+		// Reset player's velocity
 		playerScript.rb.velocity = Vector3.zero;
 		playerScript.rb.angularVelocity = Vector3.zero;
 

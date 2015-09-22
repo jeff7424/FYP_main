@@ -62,13 +62,13 @@ public class CameraVent : MonoBehaviour
 
     IEnumerator ButtonPressure()
     {
-        yield return new WaitForSeconds(durationOfAnim / 3f);
+        yield return new WaitForSeconds(durationOfAnim * 0.33f);
         button.GetComponent<pushButton>().buttonActivated = true;
     }
 
     IEnumerator DoorOpening()
     {
-        yield return new WaitForSeconds(durationOfAnim/1.2f);
+        yield return new WaitForSeconds(durationOfAnim * 0.75f);
         button.GetComponent<pushButton>().buttonActivated = true;
     }
 

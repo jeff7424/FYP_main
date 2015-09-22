@@ -3,29 +3,21 @@ using System.Collections;
 
 public class DoorTrigger : MonoBehaviour
 {
-	sfxPlayer SFX;
-
 	public GameObject showLock;
-
     public int doorNumber; // number of the door (opened by a key with the same number)
 
     private bool opening = false; // checks if the door is opened or not
-
     private Animator m_Animator;
-
-    
+	private sfxPlayer SFX;
+	
 	void Start ()
 	{
         m_Animator = GetComponent<Animator>();
-		//showLock = GetComponentInChildren<SpriteRenderer>();
 		showLock.SetActive(false);
 
 		SFX = GameObject.Find("SFX").GetComponent<sfxPlayer>();
-
-		//showLock.GetComponent<SpriteRenderer>().enabled = false;
 	}
-    
-     
+        
     void OnTriggerEnter(Collider other)
     {
 		// Check if it's not open
@@ -41,15 +33,13 @@ public class DoorTrigger : MonoBehaviour
 
 	            for (int j = 0; j < other.GetComponent<TemporaryMovement>().numberOfKeys; j++) // checks all the keys possessed by the player and if one corresponds with the door he wants to open
 	            {
-
+					// If door id matches the key id unlock door
 	                if (other.GetComponent<TemporaryMovement>().keyPossessed[j] == doorNumber)
 	                {
 						showLock.SetActive(false);
 						//showLock.enabled = false;
 	                    opening = true;
 	                    m_Animator.SetBool("DoorOpen", true);
-
-						
 
 						SFX.playUnlock();
 	                    //Destroy(this.gameObject, 0.1f);

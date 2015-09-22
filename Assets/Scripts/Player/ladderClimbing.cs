@@ -16,9 +16,9 @@ public class ladderClimbing : MonoBehaviour
 		climbMovement = GameObject.Find("Char_Cat").GetComponent<TemporaryMovement>();
 	}
 		
-	void OnTriggerStay(Collider ladder)
+	void OnTriggerEnter(Collider ladder)
 	{
-		if (ladder.gameObject.tag == "player")
+		if (ladder.gameObject.CompareTag ("player"))
 		{
             ladder.GetComponent<TemporaryMovement>().onLadder = true;
 
@@ -41,11 +41,10 @@ public class ladderClimbing : MonoBehaviour
 	void OnTriggerExit(Collider ladder)
 	{
        // ladder.GetComponent<TemporaryMovement>().onLadder = false;
-		if (ladder.gameObject.tag == "player")
+		if (ladder.gameObject.CompareTag ("player"))
 		{
 			climbMovement.enabled = true;
             climbMovement.rb.useGravity = true;
-			//inside = !inside;
             inside = false;
 		}
 	}
