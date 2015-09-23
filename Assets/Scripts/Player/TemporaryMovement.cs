@@ -83,6 +83,7 @@ public class TemporaryMovement : MonoBehaviour
 
         yield return new WaitForSeconds(durationOfSpriteAnimationBone);
 
+		boneCoolDown.GetComponent<Animator> ().playbackTime = 0.0f;
         boneCoolDown.GetComponent<Animator>().enabled = false;
     }
 
@@ -161,7 +162,7 @@ public class TemporaryMovement : MonoBehaviour
                 Debug.DrawRay(transform.position, direction * 1.3f, Color.blue, 2.0f);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.tag == "wall")
+                    if (hit.collider.CompareTag ("wall"))
                     {
                         Vector3 vectorBetweenWallPlayer = hit.point - this.transform.position;
                         float distanceWallPlayer = vectorBetweenWallPlayer.magnitude;
@@ -176,8 +177,6 @@ public class TemporaryMovement : MonoBehaviour
                     Vector3 length = (boneSpawner.transform.position - this.transform.position).normalized;
                     boneSpawner.transform.position = this.transform.position + (length * 1.3f);
                 }
-
-
 
                 newBone = (GameObject)Instantiate(bone, boneSpawner.transform.position, Quaternion.identity);
                 boneCooldown = defaultBoneCooldown;
@@ -255,11 +254,11 @@ public class TemporaryMovement : MonoBehaviour
                 rb.AddForce(Vector3.up * (jumpHeight * 100)); // *100 is just here so that we don't have to enter scary values in the inspector
             } 
         }
-
         else
         {
             //catAnim.speed = 0.1f;
-            if (onLadder == false) catAnim.SetBool("isOnGround", false);
+            if (onLadder == false) 
+				catAnim.SetBool("isOnGround", false);
             rb.AddForce(Vector3.down * (grav / 10)); // /10 is just here so that we don't have to enter scary values in the inspector
         }
 
@@ -432,4 +431,17 @@ public class TemporaryMovement : MonoBehaviour
         keyPossessed = new int[4];
         numberOfKeys = 0;
     }
+
+	public void resetCharacter()
+	{
+		// Reset player's velocity
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+
+		// Clear keys
+		resetKeys ();
+
+		// Reset ring
+		ring.isNotDisguised ("tempMove");
+	}
 }

@@ -966,8 +966,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 133886}
-  m_LocalRotation: {x: -5.96046448e-08, y: -.974525332, z: .224277675, w: 1.78813934e-07}
-  m_LocalPosition: {x: -34.5677948, y: 12.3833542, z: 11.7024136}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.9050007, y: 5.44000006, z: -.519999981}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 475982}
@@ -1341,7 +1341,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   lastTarget: {fileID: 0}
   firstTarget: {fileID: 0}
-  rotationSpeed: 2
+  rotationSpeed: 4
   States: 0
   patrolSpeed: 2.5
   chaseSpeed: 6
@@ -1351,18 +1351,18 @@ MonoBehaviour:
   thirdDirection: 90
   angleOffsetMax: 10
   angleOffsetMin: -10
-  turnTimer: 100
+  turnTimer: 1.60000002
   idleTimer: 0
   defaultDodgeTimer: 0
-  defaultEatTimer: 300
-  defaultIdleTimer: 70
-  defaultBarkTimer: 120
-  defaultAlertTimer: 400
-  defaultEscapeTimer: 400
+  defaultEatTimer: 5
+  defaultIdleTimer: 1.20000005
+  defaultBarkTimer: 2
+  defaultAlertTimer: 6
+  defaultEscapeTimer: 6
   defaultTurnTimer: 0
-  defaultNewTargetTimer: 60
+  defaultNewTargetTimer: 1
   defaultTurnTowardsSmellTimer: 0
-  defaultAgentNotMovingTimer: 120.010002
+  defaultAgentNotMovingTimer: 2
   organizeAlertWaypointsTimer: 0
   defaultChargeTimer: 0
   chargeRange: 5
@@ -1373,7 +1373,7 @@ MonoBehaviour:
   soundSource: {fileID: 0}
   alertTimer: 0
   eatTimer: 0
-  defaultTimer: 20
+  defaultTimer: .400000006
   areaCounter: 0
   turnTowardsSmellTimer: 0
   targetCounter: 0

@@ -47,6 +47,7 @@ public class coneOfVision : MonoBehaviour
             transform.localScale = new Vector3(width, height, range);
         //}
     }
+
     void Update()
     {
         GetComponent<Rigidbody>().WakeUp();
@@ -155,12 +156,14 @@ public class coneOfVision : MonoBehaviour
             }
         }
     }
+
     public void isDisguised()
     {
         width = 0;
         height = 0;
         range = 0;
     }
+
     public void isNotDisguised()
     {
         width = startWidth;

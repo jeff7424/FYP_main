@@ -79,17 +79,16 @@ public class fatDogAi : MonoBehaviour {
     bool alertLookingDirectionsSet = false;
     //Distracted values
     bool agentStopped = false;
-	//So many timers
-	public int timer;
-	public int idleTimer;    
-	public int barkTimer;
+	public float timer;
+	public float idleTimer;    
+	public float barkTimer;
 	public float escapeTimer;
 	public float eatTimer;
-	public int defaultEatTimer;
-	public int defaultIdleTimer;
-	public int defaultBarkTimer;
-	public int defaultTimer;
-	public int defaultEscapeTimer;
+	public float defaultEatTimer;
+	public float defaultIdleTimer;
+	public float defaultBarkTimer;
+	public float defaultTimer;
+	public float defaultEscapeTimer;
     public float defaultNewTargetTimer;
 	public int playerOutOfSight;
 	int targetIndex;
@@ -190,10 +189,10 @@ public class fatDogAi : MonoBehaviour {
 				//patrol, moves from one waypoint to the next waiting for a second before advancing forward//
 				//-----------------------------------------------------------------------------------------//
 
-	            if (newTargetTimer >= 0)
+	            if (newTargetTimer >= 0.0f)
 	            {
 	                agent.velocity = Vector3.zero;
-	                newTargetTimer--;
+	                newTargetTimer -= Time.deltaTime;
 	            }
 
 	                if (vectorx >= waypointOffsetMin && vectorx <= waypointOffsetMax && vectorz >= waypointOffsetMin && vectorz <= waypointOffsetMax)
@@ -231,11 +230,11 @@ public class fatDogAi : MonoBehaviour {
                     stateManager((int)enumStatesFatDog.idleSuspicious);
                 }
 
-                idleTimer--;
+                idleTimer -= Time.deltaTime;
 
-                if (idleTimer <= 0)
+                if (idleTimer <= 0.0f)
                 {
-                    idleTimer = 0;
+                    idleTimer = 0.0f;
                 }
 			}
 			break;
@@ -265,18 +264,18 @@ public class fatDogAi : MonoBehaviour {
 	                            transform.Rotate(0, angle * Time.deltaTime * 4.5f, 0);
 	                        }
 
-	                        if (barkTimer < 0)
+	                        if (barkTimer <= 0.0f)
 	                        {
 	                            bark();
 	                        }
-	                        barkTimer--;
+	                        barkTimer -= Time.deltaTime;
 	                    }
 	                    else
 	                    {                        
-	                        escapeTimer--;
-	                        if (escapeTimer <= 0)
+	                        escapeTimer -= Time.deltaTime;
+	                        if (escapeTimer <= 0.0f)
 	                        {                         
-	                            escapeTimer = 0;
+	                            escapeTimer = 0.0f;
 	                            if (currentTarget == player.transform)
 	                            {
 	                             currentTarget = lastTarget;
@@ -293,10 +292,10 @@ public class fatDogAi : MonoBehaviour {
 	                }
 	                else
 	                {                   
-	                    escapeTimer--;
-	                    if (escapeTimer <= 0)
+						escapeTimer -= Time.deltaTime;
+	                    if (escapeTimer <= 0.0f)
 	                    {
-	                        escapeTimer = 0;
+	                        escapeTimer = 0.0f;
 	                        if (currentTarget == player.transform)
 	                        {
 	                            currentTarget = lastTarget;
@@ -400,7 +399,7 @@ public class fatDogAi : MonoBehaviour {
                 {
                     if (agentStopped == false || idleTimer > 0)
                     {
-                        idleTimer--;
+						idleTimer -= Time.deltaTime;
                         agentStopped = true;
                         agent.velocity = Vector3.zero;
                         agent.Stop();
@@ -558,10 +557,10 @@ public class fatDogAi : MonoBehaviour {
 	               // alertTimer += defaultAlertTimer;
 					stateManager((int)enumStatesFatDog.patrol);
 	            }
-	            eatTimer--;
-	            if (eatTimer < 0)
+				eatTimer -= Time.deltaTime;
+	            if (eatTimer <= 0.0f)
 	            {
-	                eatTimer = 0;
+	                eatTimer = 0.0f;
 	            }
 	            //}
 	        }
@@ -612,7 +611,7 @@ public class fatDogAi : MonoBehaviour {
                 }
 			}
 		}
-		timer--;
+		timer -= Time.deltaTime;
 	}
 
 	//======================================================================//
@@ -839,10 +838,10 @@ public class fatDogAi : MonoBehaviour {
             }
             else
             {
-                turnTimer--;
-                if (turnTimer < 0)
+				turnTimer -= Time.deltaTime;
+                if (turnTimer < 0.0f)
                 {
-                    turnTimer = 0;
+                    turnTimer = 0.0f;
                 }
             }
         }
@@ -870,11 +869,9 @@ public class fatDogAi : MonoBehaviour {
 
 	public void Reset() 
 	{
-		// Stop navmesh and reset the velocity of the rigidbody
+		// Stop navmesh
 		agent.Stop ();
 		agent.velocity = Vector3.zero;
-		dogRigidbody.velocity = Vector3.zero;
-		dogRigidbody.angularVelocity = Vector3.zero;
 
 		// Reset all the timers
 		turnTimerAlert = defaultTurnTimerAlert;
@@ -892,20 +889,15 @@ public class fatDogAi : MonoBehaviour {
 		lastTarget = currentTarget;
 		agent.SetDestination (currentTarget.position);
 
-		// Reset the position
+		// Reset the position and velocity of the rigidbody
+		dogRigidbody.Sleep ();
+		dogRigidbody.velocity = Vector3.zero;
+		dogRigidbody.angularVelocity = Vector3.zero;
+		dogRigidbody.WakeUp ();
+		//dogRigidbody.AddForce ();
 		transform.position = respawnPosition;
 	}
 }
-
-
-//////////////THIS MIGHT BE THE ULTIMATE ANSWER///////////////
-//----------------------------------------------------------//
-//          rigidbody.velocity = Vector3.zero;              //
-//      rigidbody.angularVelocity = Vector3.zero;           //
-//----------------------------------------------------------//
-//////////////////////////////////////////////////////////////
-
-
 
 //if (ringOfSmellScript.smellDetected == false)
 //if (startingAngle > 0)

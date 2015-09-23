@@ -13,10 +13,10 @@ public enum enumStatesHunter
 public class huntingDog : MonoBehaviour {
 
 	bool rotationInProgress = false;
-	int idleTimer;
+	float idleTimer;
 	int turnCounter = 0;
 	int tempcounters = 0;
-	int timer;
+	float timer;
 	float alertTimer;
 	float barkTimer;
 	float currentTargetDirection;
@@ -42,10 +42,10 @@ public class huntingDog : MonoBehaviour {
     
     public bool rotationCompleted = false;
     public int areaCounter = 0;
-    public int defaultBarkTimer;
-    public int defaultAlertTimer;
-    public int defaultIdleTimer;
-    public int defaultTimer;
+	public float defaultBarkTimer;
+	public float defaultAlertTimer;
+	public float defaultIdleTimer;
+	public float defaultTimer;
     public float defaultTurnTimer;
     public float defaultEscapeTimer;
     public float escapeTimer;
@@ -115,8 +115,8 @@ public class huntingDog : MonoBehaviour {
                     transform.LookAt(enemyRotation);
                     transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, 5 * chaseSpeed / 6 * Time.deltaTime);
 
-                    leapTimer--;
-                    if (leapTimer <= 0)
+                    leapTimer -= Time.deltaTime;
+                    if (leapTimer <= 0.0f)
                     {
                         agent.autoBraking = true;
                         leapTimer = defaultLeapTimer;
@@ -124,15 +124,15 @@ public class huntingDog : MonoBehaviour {
                 }
                 else
                 {
-                    leapTimer--;
-                    if (leapTimer <= 0)
+					leapTimer -= Time.deltaTime;
+                    if (leapTimer <= 0.0f)
                     {
                         agent.autoBraking = true;
                         leapTimer = defaultLeapTimer;
                     }
                 }
                 // Bark While chasing
-                if (barkTimer < 0)
+                if (barkTimer <= 0.0f)
                 {
                     newSphere = (GameObject)Instantiate(sphere, this.transform.position, Quaternion.identity);
                     newSphere.transform.parent = transform;
@@ -143,13 +143,13 @@ public class huntingDog : MonoBehaviour {
                         hunterSphereScript.setMaxDiameter(maxScale);
                     }
                 }
-                barkTimer--;
+				barkTimer -= Time.deltaTime;
 
                 // Escape from chase
                 Physics.Linecast(transform.position, player.transform.position, out hit);
                 if (hit.collider.CompareTag (player.GetComponent<Collider>().tag) == false)
                 {
-                    escapeTimer--;
+                    escapeTimer -= Time.deltaTime;
                     if (vectorx >= chaseRange || vectorz >= chaseRange)
                     {
                         agent.speed = patrolSpeed;
@@ -166,7 +166,7 @@ public class huntingDog : MonoBehaviour {
                         alertTimer = defaultAlertTimer;
                         stateManager(3);
                     }
-                    else if (escapeTimer <= 0)
+                    else if (escapeTimer <= 0.0f)
                     {
                         agent.speed = patrolSpeed;
                         if (alertArea[areaCounter] != null)
@@ -196,13 +196,13 @@ public class huntingDog : MonoBehaviour {
 			// Look around a room by moving from waypoint to waypoint
             case enumStatesHunter.alert:
 			{
-                if (alertTimer <= 0)
+                if (alertTimer <= 0.0f)
                 {
                     stateManager(4);
                 }
                 if (vectorx >= waypointOffsetMin && vectorx <= waypointOffsetMax && vectorz >= waypointOffsetMin && vectorz <= waypointOffsetMax)
                 {
-                    if (timer <= 0)
+                    if (timer <= 0.0f)
                     {
                         if (alertArea[areaCounter] != null)
                         {
@@ -237,7 +237,7 @@ public class huntingDog : MonoBehaviour {
             {
                 if (alertTimer > 0)
                 {
-                    alertTimer--;
+                    alertTimer -= Time.deltaTime;
                 }
                 else if (alertTimer <= 0)
                 {
@@ -264,7 +264,7 @@ public class huntingDog : MonoBehaviour {
                     turnCounter = 0;
                     stateManager(3);
                 }
-                idleTimer--;
+                idleTimer -= Time.deltaTime;
             }
             break;
 
@@ -300,7 +300,7 @@ public class huntingDog : MonoBehaviour {
                 vectorx *= -1;
             }
         }
-        if (timer <= 0)
+        if (timer <= 0.0f)
         {
             timer += defaultTimer;
 
@@ -312,7 +312,7 @@ public class huntingDog : MonoBehaviour {
                 }
             }
         }
-        timer--;
+        timer -= Time.deltaTime;
 	}
 
     public void stateManager(int value)
@@ -324,7 +324,7 @@ public class huntingDog : MonoBehaviour {
     {
         float rotationDifference = 0;
 
-        if (turnTimer <= 0)
+        if (turnTimer <= 0.0f)
         {
             if (rotationInProgress == false)
             {
@@ -335,7 +335,7 @@ public class huntingDog : MonoBehaviour {
 
             else if (rotationInProgress)
             {
-                if (turnTimer == 0 && rotationDifference >= 0)
+				if (/*turnTimer <= 0.0f &&*/ rotationDifference >= 0)
                 {
                     if (targetAngle <= 180 && targetAngle >= 0) //decide which side the target is. 0-180 left, 0 - (-180)
                     {
@@ -365,7 +365,6 @@ public class huntingDog : MonoBehaviour {
                             }
                             else //if (currentAngle > targetAngle && turnTimer == 0)
                             {
-
                                 transform.Rotate(Vector3.up * Time.deltaTime * rotationStep * 1);
                                 currentAngle = Mathf.Atan2(transform.right.z, transform.right.x) * Mathf.Rad2Deg;
                                 rotationDifference = targetAngle - currentAngle;
@@ -375,9 +374,7 @@ public class huntingDog : MonoBehaviour {
                                     rotationInProgress = false;
                                     turnTimer += defaultTurnTimer; // *Time.deltaTime;
                                 }
-
                             }
-
                         }
 
                         //=============//
@@ -420,7 +417,6 @@ public class huntingDog : MonoBehaviour {
 
                     else if (targetAngle < 0 && targetAngle > -180)  //decide which side the target is
                     {
-
                         //=============//
                         //Third Sector //
                         //=============//
@@ -499,10 +495,10 @@ public class huntingDog : MonoBehaviour {
         }
         else
         {
-            turnTimer--;
-            if (turnTimer < 0)
+            turnTimer -= Time.deltaTime;
+            if (turnTimer < 0.0f)
             {
-                turnTimer = 0;
+                turnTimer = 0.0f;
             }
         }
     }

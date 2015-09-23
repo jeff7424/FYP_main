@@ -25,7 +25,6 @@ public class enemyPathfinding : MonoBehaviour
     ringOfSmell ringOfSmellScript;
     GameObject bone;    
     //rotation after smelling values
-    [Tooltip("We have no idea what this is used for Aleksi/Toni")]
     public Vector3 tempSmellPosition; 
     //These variables are for the enemies to use when they smell a bone
     float maxRange = 1.5f;
@@ -35,14 +34,13 @@ public class enemyPathfinding : MonoBehaviour
     //sound detection
     soundSphere sphereScript;
     GameObject newSphere;
-    [Tooltip("Put Sphere here")]
     public GameObject sphere;
     GameObject brokenObject;
     //vision detection
     coneOfVision coneOfVisionScript;
     //end of Detection variables
     RaycastHit hit;
-    [Tooltip("Where the player will respawn")]
+	[HideInInspector]
     public Vector3 respawnPosition;
     //Pathfinding variables
     [Tooltip("Waypoint to go during patrol")]
@@ -107,23 +105,23 @@ public class enemyPathfinding : MonoBehaviour
     // end of Idle Suspicious variables
     //Timers
     int tempcounters = 0;
-    int timer;
-    public int idleTimer;
-    int barkTimer;
+    float timer;
+	public float idleTimer;
+	float barkTimer;
     float escapeTimer;
     float dodgeTimer;
     [Tooltip("How long will enemy dodge another enemy")]
-    public int defaultDodgeTimer;
+	public float defaultDodgeTimer;
     [Tooltip("How long the enemy will eat a bone")]
-    public int defaultEatTimer;
+	public float defaultEatTimer;
     [Tooltip("How long the enemy will idle when waypoint is reached")]
-    public int defaultIdleTimer;
+	public float defaultIdleTimer;
     [Tooltip("How long the enemy will wait before barking")]
-    public int defaultBarkTimer;
+	public float defaultBarkTimer;
     [Tooltip("How long the enemy will stay in alert state")]
-    public int defaultAlertTimer;
+	public float defaultAlertTimer;
     [Tooltip("How long the player needs to be out of sight for enemies to return into alert state")]
-    public int defaultEscapeTimer;
+	public float defaultEscapeTimer;
     [Tooltip("Time between turns during suspicious state")]
     public float defaultTurnTimer;
     [Tooltip("How often enemies will ensure that they have a target to go for")]
@@ -133,7 +131,7 @@ public class enemyPathfinding : MonoBehaviour
     [Tooltip("How long enemy can stand still before checking if he's stuck")]
     public float defaultAgentNotMovingTimer;
     [Tooltip("How long until Alert Waypoints can be organized again by the same enemy")]
-    public int organizeAlertWaypointsTimer;
+	public float organizeAlertWaypointsTimer;
     //end of Timers  
     //Charge variables
     float chargeTimer;
@@ -167,7 +165,7 @@ public class enemyPathfinding : MonoBehaviour
     //It can be changed to FixedUpdate if it gives better results
    Vector3 currentMove;
    Vector3 previousPosition;
-    int smellTimer = 180;
+    float smellTimer = 3.0f;
     [Tooltip("To show enemy's current speed")]
     public float currentSpeed;
     //[HideInInspector]
@@ -181,7 +179,7 @@ public class enemyPathfinding : MonoBehaviour
    // [HideInInspector]
     public float eatTimer;
    // [HideInInspector]
-    public int defaultTimer;
+	public float defaultTimer;
    // [HideInInspector]
     public int areaCounter = 0;
    // [HideInInspector]
@@ -306,7 +304,7 @@ public class enemyPathfinding : MonoBehaviour
                 if (newTargetTimer >= 0)
                 {                       
                     agent.velocity = Vector3.zero;
-                    newTargetTimer--; 
+                    newTargetTimer -= Time.deltaTime; 
                 }
                 else
                 {
@@ -383,10 +381,10 @@ public class enemyPathfinding : MonoBehaviour
                         }
                         agent.speed = patrolSpeed;
                     }
-                    idleTimer--;
-                    if (idleTimer <= 0)
+                    idleTimer -= Time.deltaTime;
+                    if (idleTimer <= 0.0f)
                     {
-                        idleTimer = 0;
+                        idleTimer = 0.0f;
                     }
                 }
                 //We assume enemy is not in a waypoint
@@ -426,12 +424,12 @@ public class enemyPathfinding : MonoBehaviour
                     transform.LookAt(enemyRotation);
                     transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, chaseSpeed * Time.deltaTime);
 
-                    chargeTimer--;
-                    if (chargeTimer <= 0)
-                    {
-                        agent.autoBraking = true;
-                        chargeTimer = defaultChargeTimer;
-                    }
+//                    chargeTimer -= Time.deltaTime;
+//                    if (chargeTimer <= 0.0f)
+//                    {
+//                        agent.autoBraking = true;
+//                        chargeTimer = defaultChargeTimer;
+//                    }
                 }
 
                 if (vectorx < chargeRange || vectorz < chargeRange)
@@ -440,23 +438,23 @@ public class enemyPathfinding : MonoBehaviour
                     enemyRotation = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
                     transform.LookAt(enemyRotation);
                     transform.position = Vector3.MoveTowards(transform.position, currentTarget.position, chaseSpeed * Time.deltaTime);
-
-                    chargeTimer--;
-                    if (chargeTimer <= 0)
+				}
+                    chargeTimer -= Time.deltaTime;
+                    if (chargeTimer <= 0.0f)
                     {
                         agent.autoBraking = true;
                         chargeTimer = defaultChargeTimer;
                     }
-                }
-                else
-                {
-                    chargeTimer--;
-                    if (chargeTimer <= 0)
-                    {
-                        agent.autoBraking = true;
-                        chargeTimer = defaultChargeTimer;
-                    }
-                }
+//                }
+//                else
+//                {
+//                    chargeTimer -= Time.deltaTime;
+//                    if (chargeTimer <= 0.0f)
+//                    {
+//                        agent.autoBraking = true;
+//                        chargeTimer = defaultChargeTimer;
+//                    }
+//                }
 
                 // Bark while chasing
                 if (barkTimer < 0)
@@ -471,7 +469,7 @@ public class enemyPathfinding : MonoBehaviour
                         sphereScript.setMaxDiameter(maxScale);
                     }
                 }
-                barkTimer--;
+                barkTimer -= Time.deltaTime;
 
                 // Escape from chase
                 Physics.Linecast(this.transform.position, player.transform.position, out hit);
@@ -486,7 +484,7 @@ public class enemyPathfinding : MonoBehaviour
                             currentTarget = alertArea[areaCounter];
                         }
                         areaCounter++;
-                        if (areaCounter > 2)
+						if (areaCounter > alertArea.Count - 1)
                         {
                             areaCounter = 0;
                         }
@@ -503,7 +501,7 @@ public class enemyPathfinding : MonoBehaviour
                         }
 
                         areaCounter++;
-                        if (areaCounter > 2)
+						if (areaCounter > alertArea.Count - 1)
                         {
                             areaCounter = 0;
                         }
@@ -511,7 +509,7 @@ public class enemyPathfinding : MonoBehaviour
                         //organizeAlertWaypoints();
 					stateManager((int)enumStates.alert);
                     }
-                    escapeTimer--;
+                    escapeTimer -= Time.deltaTime;
                 }
                 else
                 {
@@ -573,7 +571,7 @@ public class enemyPathfinding : MonoBehaviour
 	                    }
 
 	                    areaCounter++;
-	                    if (areaCounter > 2)
+						if (areaCounter > alertArea.Count - 1)
 	                    {
 	                        areaCounter = 0;
 	                    }
@@ -593,20 +591,20 @@ public class enemyPathfinding : MonoBehaviour
 	                }
 	                else
 	                {
-	                    alertTimer--;
-	                    if (alertTimer <= 0)
+	                    alertTimer -= Time.deltaTime;
+	                    if (alertTimer <= 0.0f)
 	                    {
-	                        alertTimer = 0;
+	                        alertTimer = 0.0f;
 	                    }
 	                }
 
 	            }
 	            else
 	            {
-	                alertTimer--;
-	                if (alertTimer <= 0)
+	                alertTimer -= Time.deltaTime;
+	                if (alertTimer <= 0.0f)
 	                {
-	                    alertTimer = 0;
+	                    alertTimer = 0.0f;
 	                }
 	            }
 
@@ -642,17 +640,17 @@ public class enemyPathfinding : MonoBehaviour
                     agent.Resume();
 					stateManager((int)enumStates.chase);
                 }
-                if (alertTimer > 0)
+                if (alertTimer > 0.0f)
                 {
-                    alertTimer--;
+                    alertTimer -= Time.deltaTime;
                 }
 
-                if (alertTimer < 0)
+                if (alertTimer <= 0.0f)
                 {
-                    alertTimer = 0;
-                }
-                if (alertTimer <= 0)
-                {
+                    alertTimer = 0.0f;
+//                }
+//                if (alertTimer <= 0)
+//                {
                     agent.speed = patrolSpeed;
                     turnCounter = 0;
                     agentStopped = false;
@@ -684,10 +682,10 @@ public class enemyPathfinding : MonoBehaviour
 					stateManager((int)enumStates.alert);
                 }
 
-                idleTimer--;
-                if (idleTimer < 0)
+                idleTimer -= Time.deltaTime;
+                if (idleTimer < 0.0f)
                 {
-                    idleTimer = 0;
+                    idleTimer = 0.0f;
                 }
                 
             }
@@ -860,10 +858,10 @@ public class enemyPathfinding : MonoBehaviour
                     alertTimer += defaultAlertTimer;
 					stateManager((int)enumStates.alert);
                 }
-                eatTimer--;
-                if (eatTimer < 0)
+                eatTimer -= Time.deltaTime;
+                if (eatTimer <= 0.0f)
                 {
-                    eatTimer = 0;
+                    eatTimer = 0.0f;
                 }
             //}
             }
@@ -873,10 +871,10 @@ public class enemyPathfinding : MonoBehaviour
 			// Smell if player smell collides with it
             case enumStates.smell:
             {
-                if (smellTimer > 0)
+                if (smellTimer > 0.0f)
                 {
-                    smellTimer--;
-                    if (smellTimer <= 0)
+                    smellTimer -= Time.deltaTime;
+                    if (smellTimer <= 0.0f)
                     {
                         smellTimer = 180;
 						stateManager((int)enumStates.idle);
@@ -989,7 +987,7 @@ public class enemyPathfinding : MonoBehaviour
                 }
             }            
         }
-        timer--;
+        timer -= Time.deltaTime;
         //if(dodgeTimer > 0)
         //{
         //    dodgeTimer--;
@@ -1006,8 +1004,8 @@ public class enemyPathfinding : MonoBehaviour
 
             else if (States == enumStates.chase || States == enumStates.alert)
             {                
-                agentNotMovingTimer--;
-                if (agentNotMovingTimer <= 0)
+                agentNotMovingTimer -= Time.deltaTime;
+                if (agentNotMovingTimer <= 0.0f)
                 {
                     agentStopped = false;
                     agent.Resume();
@@ -1030,8 +1028,8 @@ public class enemyPathfinding : MonoBehaviour
 
         // To make sure even if the enemies lose their target for some reason
         // they will recover and start to move again. 
-        agentNotMovingTimer--;
-        if (agentNotMovingTimer <= 0)
+        agentNotMovingTimer -= Time.deltaTime;
+        if (agentNotMovingTimer <= 0.0f)
         {
 //            agentNotMovingTimer = 0;
 //        }
@@ -1279,10 +1277,10 @@ public class enemyPathfinding : MonoBehaviour
         }
         else
         {
-            turnTimer--;
-            if (turnTimer < 0)
+            turnTimer -= Time.deltaTime;
+            if (turnTimer <= 0.0f)
             {
-                turnTimer = 0;
+                turnTimer = 0.0f;
             }
         }
     }
@@ -1391,10 +1389,10 @@ public class enemyPathfinding : MonoBehaviour
         }
         else
         {
-            organizeAlertWaypointsTimer--;
-            if (organizeAlertWaypointsTimer < 0)
+            organizeAlertWaypointsTimer -= Time.deltaTime;
+            if (organizeAlertWaypointsTimer <= 0.0f)
             {
-                organizeAlertWaypointsTimer = 0;
+                organizeAlertWaypointsTimer = 0.0f;
             }
         }
     }
@@ -1460,7 +1458,7 @@ public class enemyPathfinding : MonoBehaviour
 	{
 	    if (States != enumStates.smell)
 	    {
-	        turnTowardsSmellTimer--;
+	        turnTowardsSmellTimer -= Time.deltaTime;
 	        if (turnTowardsSmellTimer <= 0)
 	        {
 	            turnTowardsSmellTimer = 0;

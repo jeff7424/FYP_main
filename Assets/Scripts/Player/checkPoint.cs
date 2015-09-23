@@ -89,7 +89,6 @@ public class checkPoint: MonoBehaviour
 		//	Change for each to for loop to reduce GC	//
 		//==============================================//
         sendBack = true;
-        playerScript.resetKeys();
 
 		// Get all the objects from the scene using tag (Might have performance impact, if have time find a better solution)
         allEnemies = GameObject.FindGameObjectsWithTag("enemy");
@@ -109,10 +108,13 @@ public class checkPoint: MonoBehaviour
 //            hunterScript.selfDestruct();
 //            //Destroy(hunter);
 //        }
-		for (int i = 0; i < allHunters.Length; i++) 
+		if (allHunters.Length > 0) 
 		{
-			hunterScript = allHunters[i].GetComponent<huntingDog>();
-			hunterScript.selfDestruct();
+			for (int i = 0; i < allHunters.Length; i++) 
+			{
+				hunterScript = allHunters [i].GetComponent<huntingDog> ();
+				hunterScript.selfDestruct ();
+			}
 		}
 //        foreach(GameObject fatDog in allFatDogs)
 //        {
@@ -184,9 +186,7 @@ public class checkPoint: MonoBehaviour
             Destroy(sphere);
         }
 
-		// Reset player's velocity
-		playerScript.rb.velocity = Vector3.zero;
-		playerScript.rb.angularVelocity = Vector3.zero;
+		playerScript.resetCharacter();
 
 		sendBack = false;
     }

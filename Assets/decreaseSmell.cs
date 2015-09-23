@@ -16,7 +16,7 @@ public class decreaseSmell : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "player" || other.gameObject.tag == "smell")
+        if (other.gameObject.CompareTag ("player") || other.gameObject.CompareTag ("smell"))
         {
             script.decreaseSmell(value);
         }

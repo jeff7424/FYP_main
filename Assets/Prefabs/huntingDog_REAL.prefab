@@ -1397,35 +1397,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45cee8835f5b2f4d89ac20ae0dcceba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hunterSpawnScript: {fileID: 0}
-  currentTarget: {fileID: 0}
-  statesHunter: 2
-  sphere: {fileID: 181896, guid: 17692f10cc5333943afd63271381978e, type: 2}
-  alertArea: []
-  firstDirection: 90
-  secondDirection: -90
-  thirdDirection: 90
-  directionDegrees: []
-  currentAngle: 0
-  targetAngle: 0
-  angleOffsetMax: 10
-  angleOffsetMin: -10
   rotationCompleted: 0
-  turnTimer: 100
   areaCounter: 0
-  defaultBarkTimer: 120
-  defaultAlertTimer: 400
-  defaultIdleTimer: 70
-  defaultTimer: 20
+  defaultBarkTimer: 2
+  defaultAlertTimer: 6.5
+  defaultIdleTimer: 1.20000005
+  defaultTimer: .330000013
   defaultTurnTimer: 0
-  defaultEscapeTimer: 400
+  defaultEscapeTimer: 1.20000005
   escapeTimer: 0
   patrolSpeed: 3.5
   chaseSpeed: 13
   chaseRange: 5
+  currentAngle: 0
+  targetAngle: 0
+  angleOffsetMax: 10
+  angleOffsetMin: -10
+  turnTimer: 1.20000005
   leapRange: 0
-  defaultLeapTimer: 60
+  defaultLeapTimer: 1
   chargeRange: 5
+  firstDirection: 90
+  secondDirection: -90
+  thirdDirection: 90
+  sphere: {fileID: 181896, guid: 17692f10cc5333943afd63271381978e, type: 2}
+  hunterSpawnScript: {fileID: 0}
+  currentTarget: {fileID: 0}
+  statesHunter: 2
+  alertArea: []
+  directionDegrees: []
 --- !u!114 &11479620
 MonoBehaviour:
   m_ObjectHideFlags: 1

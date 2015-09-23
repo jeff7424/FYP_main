@@ -49,83 +49,78 @@ public class ringOfSmell : MonoBehaviour {
         chaseTransScript = GameObject.Find ("BGM").GetComponent<chaseTransition>();
         detectionTimer = defaultDetectionRange;
         particle = GetComponent<ParticleSystem>();
-
     }
+
     void Update()
     {
         if (this.transform.localScale.x < radius - maxDifference)
         {
             this.transform.localScale += scalingRate;
         }
-
         else if (transform.localScale.x > radius + maxDifference)
         {
             transform.localScale -= scalingRate;
         }
-
         if (radius == maxRadius && color != Color.cyan) // Fat radius
         {
             rend.material.SetColor("_Color", maxColor);
-            particle.startColor = new Color(maxColor.r,maxColor.g,maxColor.b);
-
+            particle.startColor = new Color(maxColor.r, maxColor.g, maxColor.b);
         }
-
         else if (radius < maxRadius && radius > minRadius) // Any radius which 
         {
             rend.material.SetColor("_Color", color);
             particle.startColor = new Color(color.r, color.g, color.b);
         }
-
         else if (radius == minRadius)
         {
             rend.material.SetColor("_Color", minColor);
             particle.startColor = new Color(minColor.r, minColor.g, minColor.b);
         }
     }
+
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "enemy")
+        if (other.gameObject.CompareTag ("enemy"))
         {
             script = other.GetComponent<enemyPathfinding>();
             smellDetected = true;
         }
-        else if(other.gameObject.tag == "huntingDog")
+        else if(other.gameObject.CompareTag ("huntingDog"))
         {
             huntingDogScript = other.GetComponent<huntingDog>();
             smellDetected = true;
         }
-        else if(other.gameObject.tag == "fatDog")
+        else if(other.gameObject.CompareTag ("fatDog"))
         {
             scriptFatDog = other.GetComponent<fatDogAi>();
             smellDetected = true;
         }
-        else if(other.gameObject.tag == "looker")
+        else if(other.gameObject.CompareTag ("looker"))
         {
-            if (other.transform.parent.tag == "enemy")
+            if (other.transform.parent.CompareTag ("enemy"))
             {
                 script = other.transform.parent.GetComponent<enemyPathfinding>();
                 smellDetected = true;
             }
-            else if (other.transform.parent.tag == "huntingDog")
+            else if (other.transform.parent.CompareTag ("huntingDog"))
             {
                 huntingDogScript = other.transform.parent.GetComponent<huntingDog>();
                 smellDetected = true;
             }
-            else if (other.transform.parent.tag == "fatDog")
+            else if (other.transform.parent.CompareTag ("fatDog"))
             {
                 scriptFatDog = other.transform.parent.GetComponent<fatDogAi>();
                 smellDetected = true;
             }
         }
     }
+
     void OnTriggerStay(Collider other)
     {
-
         //-----------------------------------------------------------------------//
         //if player crosses the cone, informs the parent(Enemy) of visible player//
         //-----------------------------------------------------------------------//  
-
-        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "huntingDog" || other.gameObject.tag == "fatDog")
+		if (other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog"))
         {
             Physics.Linecast(transform.parent.position, other.transform.position, out hit);
             Debug.DrawLine(transform.parent.position, other.transform.position, Color.cyan);
@@ -176,14 +171,14 @@ public class ringOfSmell : MonoBehaviour {
 
                 if(exitrange.x > maximumDistance || exitrange.y > maximumDistance  || exitrange.z > maximumDistance )
                 {
-                playerSeen = false;
+               		playerSeen = false;
                 }
             }
         }
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "enemy" || other.gameObject.tag == "huntingDog" || other.gameObject.tag == "fatDog")
+		if (other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog"))
         {
             if (smellingPlayer)
             {
@@ -209,8 +204,8 @@ public class ringOfSmell : MonoBehaviour {
                         {
                             return;
                         }
-                    smellDetected = false;
-                    script.turnTowardsSmellTimer = script.defaultTurnTowardsSmellTimer;
+	                    smellDetected = false;
+	                    script.turnTowardsSmellTimer = script.defaultTurnTowardsSmellTimer;
                     }
                 }
                 else if (scriptFatDog != null)
@@ -222,28 +217,28 @@ public class ringOfSmell : MonoBehaviour {
                 }               
             }
         }
-        
-        
     }
+
     public void isDisguised(string script)
     {
         radius = 0;
         disguised = true;
-
     }
+
     public void isNotDisguised(string script)
     {
         radius = startRadius;
         disguised = false;
     }
+
     public void increaseSmell(float value)
     {
         if (radius < maxRadius) 
 			radius += value;
         if (radius > maxRadius-1 || radius > maxRadius) 
 			radius = maxRadius;
-        
     }
+
     public void decreaseSmell(float value)
     {
         if (radius > minRadius) 

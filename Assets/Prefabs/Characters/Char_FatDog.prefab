@@ -637,7 +637,7 @@ Transform:
   m_GameObject: {fileID: 114766}
   m_LocalRotation: {x: .000593819714, y: -.0215409845, z: -.027550105, w: .999388158}
   m_LocalPosition: {x: -.0340000018, y: .112999998, z: .832000017}
-  m_LocalScale: {x: 1.45514703, y: .727573574, z: 2.91029501}
+  m_LocalScale: {x: 2.5, y: 1, z: 8}
   m_Children: []
   m_Father: {fileID: 494614}
   m_RootOrder: 2
@@ -776,8 +776,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127488}
-  m_LocalRotation: {x: 0, y: .99999696, z: 0, w: -.00246862718}
-  m_LocalPosition: {x: 4.44000006, y: 6.28999996, z: 5}
+  m_LocalRotation: {x: 0, y: -.0506809317, z: 0, w: -.998714924}
+  m_LocalPosition: {x: 56.25, y: 6.96000004, z: 1.09000003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482378}
@@ -935,7 +935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2be51c5b030ad349bb7ef1bf777477c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  darnYouGandalf: 0
   respawnPosition: {x: 0, y: 0, z: 0}
   target1: {fileID: 0}
   currentTarget: {fileID: 0}
@@ -944,6 +943,7 @@ MonoBehaviour:
   States: 0
   sphere: {fileID: 181896, guid: 17692f10cc5333943afd63271381978e, type: 2}
   soundSource: {fileID: 0}
+  agent: {fileID: 0}
   eatBone: 0
   distracted: 0
   onWaypoint: 0
@@ -951,15 +951,16 @@ MonoBehaviour:
   turnSpeed: 2
   speed: 2
   firstDirection: 0
-  secondDirection: 0
+  secondDirection: 90
   thirdDirection: 0
-  fourthDirection: 0
+  fourthDirection: 90
   currentAngle: 0
   targetAngle: 0
   angleOffsetMax: 10
   angleOffsetMin: -10
   rotationCompleted: 0
   turnTimer: 0
+  rotationDifference: 0
   firstDirectionAlert: 33
   secondDirectionAlert: -33
   turnTimerAlert: 0
@@ -969,20 +970,24 @@ MonoBehaviour:
   barkTimer: 0
   escapeTimer: 0
   eatTimer: 0
-  defaultEatTimer: 500
-  defaultIdleTimer: 60
-  defaultBarkTimer: 20
-  defaultTimer: 60
-  defaultEscapeTimer: 240
+  defaultEatTimer: 8
+  defaultIdleTimer: 1
+  defaultBarkTimer: .330000013
+  defaultTimer: 1
+  defaultEscapeTimer: 4
   defaultNewTargetTimer: 0
   playerOutOfSight: 0
   areaCounter: 0
-  defaultTurnTimer: 60
+  defaultTurnTimer: 1
   newTargetTimer: 0
   defaultRaycastRange: 5
   patrolSpeed: 3.5
   chaseSpeed: 0
   chaseRange: 0
+  startingAngle: 0
+  facingAngle: 0
+  angleDiff: 0
+  wasChasing: 0
 --- !u!114 &11453006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -996,9 +1001,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disguised: 0
   playerSeen: 0
-  startWidth: 2
+  startWidth: 2.5
   startHeight: 1
-  startRange: 4
+  range: 0
+  startRange: 8
   alarmBonus: 0
   detectionTimer: 30
 --- !u!137 &13775706
@@ -1066,7 +1072,7 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 127488}
   m_Enabled: 1
-  m_Radius: 1.64999998
+  m_Radius: .75
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

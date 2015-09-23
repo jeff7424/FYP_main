@@ -11,15 +11,10 @@ public class smellIncrease : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("player");
         script = player.GetComponentInChildren<ringOfSmell>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.tag == "player" || other.gameObject.tag == "smell")
+        if(other.gameObject.CompareTag ("player") || other.gameObject.CompareTag ("smell"))
         {
             script.increaseSmell(value);
         }
