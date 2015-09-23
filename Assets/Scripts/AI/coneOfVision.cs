@@ -84,7 +84,7 @@ public class coneOfVision : MonoBehaviour
         //-----------------------------------------------------------------------//
         //if player crosses the cone, informs the parent(Enemy) of visible player//
         //-----------------------------------------------------------------------//
-        if (other.gameObject.CompareTag("player") == true)
+        if (other.gameObject.CompareTag("player"))
         {
 			// Check if there's wall in between using linecast
             RaycastHit hit;

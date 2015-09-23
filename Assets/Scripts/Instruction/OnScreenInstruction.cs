@@ -4,6 +4,8 @@ using System.Collections;
 
 public class OnScreenInstruction : MonoBehaviour {
 
+	private bool active;
+
 	public GameObject chatBox;
 	public GameObject instruction1;
 
@@ -11,28 +13,30 @@ public class OnScreenInstruction : MonoBehaviour {
 	
 	void Start()
 	{	
+		active = true;
 		chatBox.SetActive(false);
 		instruction1.SetActive(false);
 		//instructionForPlayer.SetActive(false);
-
 	}
 
 	void OnTriggerEnter(Collider instruction)
 	{
-		if (instruction.gameObject.tag == "player")
+		if (active == true) 
 		{
-			instruction1.SetActive(true);
-			chatBox.SetActive(true);
-			//instructionForPlayer.SetActive(true);
-				
+			if (instruction.gameObject.CompareTag ("player")) 
+			{
+				instruction1.SetActive (true);
+				chatBox.SetActive (true);
+				//instructionForPlayer.SetActive(true);
 
-			StartCoroutine(FadeIn());
+				StartCoroutine (FadeIn ());
+			}
 		}
 	}
 
 	void OnTriggerExit(Collider instruction)
 	{
-		if (instruction.gameObject.tag == "player")
+		if (instruction.gameObject.CompareTag ("player"))
 		{
 			StartCoroutine(FadeOut());
 
@@ -62,8 +66,7 @@ public class OnScreenInstruction : MonoBehaviour {
 		chatBox.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.2f);
 		
 		yield return new WaitForSeconds(0.03f);
-		
-		
+
 		instruction1.GetComponent<Text>().color = new Color(1f, 1f, 1f, 0.0f);
 		chatBox.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0.0f);
 		

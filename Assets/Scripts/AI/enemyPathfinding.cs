@@ -25,7 +25,7 @@ public class enemyPathfinding : MonoBehaviour
     ringOfSmell ringOfSmellScript;
     GameObject bone;    
     //rotation after smelling values
-    public Vector3 tempSmellPosition; 
+    public Transform tempSmellPosition; 
     //These variables are for the enemies to use when they smell a bone
     float maxRange = 1.5f;
     Vector3 soundSourcePos;
@@ -335,7 +335,7 @@ public class enemyPathfinding : MonoBehaviour
 			
                     if (SeekForSmellSource)
                     {
-                        tempSmellPosition = player.transform.position;
+                        tempSmellPosition = player.transform;
                         stateManager((int)enumStates.smell);
                     }
                 }
@@ -396,7 +396,7 @@ public class enemyPathfinding : MonoBehaviour
 
                 if (SeekForSmellSource)
                 {
-                    tempSmellPosition = player.transform.position;
+                    tempSmellPosition = player.transform;
                     stateManager((int)enumStates.smell);
                 }
             }
@@ -610,7 +610,7 @@ public class enemyPathfinding : MonoBehaviour
 
 	            if (SeekForSmellSource)
 	            {
-	                tempSmellPosition = player.transform.position; 
+	                tempSmellPosition = player.transform; 
 					stateManager((int)enumStates.smell);
 	            }
 			}
@@ -891,14 +891,21 @@ public class enemyPathfinding : MonoBehaviour
 					rb.velocity = Vector3.zero;
                     if (tempSmellPosition != null)
                     {            
-                        Vector3 relative = transform.InverseTransformPoint(tempSmellPosition);
+						// Rotate the enemy
+                        Vector3 relative = transform.InverseTransformPoint(tempSmellPosition.position);
                         float angle = Mathf.Atan2(relative.x, relative.z) * Mathf.Rad2Deg;
                         transform.Rotate(0, angle * Time.deltaTime * rotationSpeed, 0);
+						
+						// If reach the angle
                         if (angle < 5.0f && angle > -5.0f)
                         {
-                            SeekForSmellSource = false;
+	                        SeekForSmellSource = false;
 							stateManager((int)enumStates.idle);
-                        }
+						}
+						else
+						{
+							
+						}
                     }
                     //else
                     //{

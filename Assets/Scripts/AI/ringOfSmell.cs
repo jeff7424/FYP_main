@@ -196,7 +196,7 @@ public class ringOfSmell : MonoBehaviour {
                     {
                         if (script.turnTowardsSmellTimer <= 0)
                         {
-                            script.tempSmellPosition = script.player.transform.position;
+                            script.tempSmellPosition = script.player.transform;
                             script.continueRotation = true;
                             script.stateManager(8);
                         }

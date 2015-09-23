@@ -31,11 +31,15 @@ public class ObstructionDetector : MonoBehaviour {
 		for (int i = 0; i < rayCastHit.Length; i++) 
 		{
 			RaycastHit hit = rayCastHit[i];
-			Wall wall = hit.transform.GetComponent<Wall>();
-			if (wall)
+
+			if (hit.transform.CompareTag ("wall"))
 			{
-				wall.SetTransparent();
-				lastWalls.Add(wall);
+				Wall wall = hit.transform.GetComponent<Wall>();
+				if (wall)
+				{
+					wall.SetTransparent();
+					lastWalls.Add(wall);
+				}
 			}
 		}
 	}

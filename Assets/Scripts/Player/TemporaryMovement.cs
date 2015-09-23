@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class TemporaryMovement : MonoBehaviour
 {
-    
     public float magnMultiplier;
     public float movementSpeed;
     public float sprintModifier;
