@@ -25,6 +25,7 @@ public class CameraVent2 : MonoBehaviour
 		durationOfAnim = camAnimation.length;
 		playerMovement = GameObject.Find("Char_Cat").GetComponent<TemporaryMovement>();
 		obstructD = GameObject.Find("Target 1").GetComponent<ObstructionDetector>();
+		//obstructD = mainCam.GetComponent<ObstructionDetector> ();
 	}
 	
 	void OnTriggerEnter(Collider other)

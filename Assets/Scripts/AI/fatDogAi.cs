@@ -889,6 +889,9 @@ public class fatDogAi : MonoBehaviour {
 		lastTarget = currentTarget;
 		agent.SetDestination (currentTarget.position);
 
+		// Delete sound source 
+		soundSource = null;
+
 		// Reset the position and velocity of the rigidbody
 		dogRigidbody.Sleep ();
 		dogRigidbody.velocity = Vector3.zero;

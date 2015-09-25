@@ -133,7 +133,7 @@ public class TemporaryMovement : MonoBehaviour
 		horizontal = Input.GetAxis("Horizontal");
 		vertical = Input.GetAxis("Vertical");
 
-        movement = new Vector3(1, 0, 1) * vertical + new Vector3(1, 0, -1) * horizontal;
+        movement = new Vector3(1, 0, 1) * vertical + new Vector3(1, 0, -1) * horizontal;  
         Vector3 look = new Vector3(-1, 0, 1) * vertical + new Vector3(1, 0, 1) * horizontal;
 
         rb.MovePosition(transform.position + movement.normalized * (movementSpeed + movement.magnitude) * Time.deltaTime);
