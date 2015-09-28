@@ -76,6 +76,9 @@ public class TemporaryMovement : MonoBehaviour
     [HideInInspector]
     public int bonesPlaced;
 
+	public bool thirdPersonControls;
+	private Vector3 look;
+
     IEnumerator spriteBoneTimer()
     {
         boneCoolDown.GetComponent<Animator>().enabled = true;
@@ -133,11 +136,29 @@ public class TemporaryMovement : MonoBehaviour
 		horizontal = Input.GetAxis("Horizontal");
 		vertical = Input.GetAxis("Vertical");
 
-        movement = new Vector3(1, 0, 1) * vertical + new Vector3(1, 0, -1) * horizontal;  
-        Vector3 look = new Vector3(-1, 0, 1) * vertical + new Vector3(1, 0, 1) * horizontal;
 
-        rb.MovePosition(transform.position + movement.normalized * (movementSpeed + movement.magnitude) * Time.deltaTime);
-        transform.LookAt(transform.position + look, Vector3.up);
+		if (thirdPersonControls == false) 
+		{
+			movement = new Vector3 (1, 0, 1) * vertical + new Vector3 (1, 0, -1) * horizontal;  
+			look = new Vector3(-1, 0, 1) * vertical + new Vector3(1, 0, 1) * horizontal;
+			rb.MovePosition(transform.position + movement.normalized * (movementSpeed + movement.magnitude) * Time.deltaTime);
+			transform.LookAt(transform.position + look, Vector3.up);
+		} 
+		else 
+		{
+			if (horizontal != 0 || vertical != 0) 
+			{
+				movement = new Vector3 (vertical, 0, -horizontal);
+				look = new Vector3 (horizontal, 0, vertical);
+
+				Vector3 v = (Camera.main.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+				Vector3 h = (Camera.main.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+
+				rb.MovePosition (transform.position + v + h);
+				transform.LookAt (transform.position + look, Vector3.up);
+			}
+		}
+
 
         if ((Input.GetKeyDown(KeyCode.T) || Input.GetButtonDown("Fire3")) && bones > 0 && bonesPlaced < maxBonesPlaced && boneCooldown <= 0) // BONE
         {

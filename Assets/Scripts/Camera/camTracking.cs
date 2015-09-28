@@ -7,8 +7,8 @@ public class camTracking : MonoBehaviour {
     public float value;
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         if (transform.position.x >= target.position.x + value || transform.position.x <= target.position.x - value || transform.position.z >= target.position.z + value || transform.position.z <= target.position.z - value)
-		transform.position = target.position;
+			transform.position = target.position;
 	}
 }
