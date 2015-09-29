@@ -91,26 +91,29 @@ public class coneOfVision : MonoBehaviour
 
             Physics.Linecast(transform.position, other.transform.position, out hit);
             Debug.DrawLine(transform.position, other.transform.position, Color.black);
-            if (hit.collider.CompareTag("player"))
-            {
-                chaseTransScript.chaseTrans();
+			if (hit.collider != null)
+			{
+	            if (hit.collider.CompareTag("player"))
+	            {
+	                chaseTransScript.chaseTrans();
 
-                if (script != null)
-                {
-                    playerSeen = true;
-                    script.stateManager(2);
-                }
-                if (scriptFatDog != null)
-                {
-                    playerSeen = true;
-                    scriptFatDog.stateManager(2);
-                }
-                if (scriptHuntingDog != null)
-                {
-                    playerSeen = true;
-                    scriptHuntingDog.stateManager(2);
-                }
-            }
+	                if (script != null)
+	                {
+	                    playerSeen = true;
+	                    script.stateManager(2);
+	                }
+	                if (scriptFatDog != null)
+	                {
+	                    playerSeen = true;
+	                    scriptFatDog.stateManager(2);
+	                }
+	                if (scriptHuntingDog != null)
+	                {
+	                    playerSeen = true;
+	                    scriptHuntingDog.stateManager(2);
+	                }
+	            }
+			}
         }
     }
 

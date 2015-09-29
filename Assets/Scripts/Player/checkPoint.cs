@@ -21,6 +21,7 @@ public class checkPoint: MonoBehaviour
 	private GameObject[] allDestructibles;
 	private GameObject[] allBones;
 	private GameObject[] allSpheres;
+	private GameObject[] allClosets;
 	private Rigidbody rb;
 	private chaseTransition chaseTransScript;
 	private enemyPathfinding script;
@@ -99,6 +100,7 @@ public class checkPoint: MonoBehaviour
         allBones = GameObject.FindGameObjectsWithTag("bone");
         allFatDogs = GameObject.FindGameObjectsWithTag("fatDog");
         allSpheres = GameObject.FindGameObjectsWithTag("soundSphere");
+		allClosets = GameObject.FindGameObjectsWithTag ("Closet");
 		//resets BGM.
 		chaseTransScript.resetChaseTrans(); 
 
@@ -185,7 +187,10 @@ public class checkPoint: MonoBehaviour
         {
             Destroy(sphere);
         }
-
+		foreach (GameObject closet in allClosets) 
+		{
+			closet.GetComponent<hidingThirdPerson>().ResetCloset();
+		}
 		playerScript.resetCharacter();
 
 		sendBack = false;

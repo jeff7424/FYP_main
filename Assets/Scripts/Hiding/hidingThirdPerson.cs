@@ -34,7 +34,7 @@ public class hidingThirdPerson : MonoBehaviour {
 
     void OnTriggerStay(Collider catType)
     {	
-		if (catType.tag == "player") 
+		if (catType.CompareTag ("player"))
 		{	
 
 			isEntered = true;
@@ -55,11 +55,12 @@ public class hidingThirdPerson : MonoBehaviour {
 		}
     }
 
-	void OnTriggerExit()
+	void OnTriggerExit(Collider cat)
 	{	
-
-		isEntered = true;
-		
+		if (cat.CompareTag ("player")) 
+		{
+			isEntered = false;
+		}
 		//keyboardCheckToEnter.SetActive(false);
 		//controllerCheckToEnter.SetActive(false);
 	}
@@ -83,16 +84,24 @@ public class hidingThirdPerson : MonoBehaviour {
 			}
 		} 
 
-		if (cp.sendBack == true) 
-        {
-			isHiding = false;
-			isPaused = false;    
-			
-			//checkToEnter.enabled = false;
-			//checkToExit.enabled = false;
+//		if (cp.sendBack == true) 
+//        {
+//			isHiding = false;
+//			isPaused = false;    
+//			
+//			//checkToEnter.enabled = false;
+//			//checkToExit.enabled = false;
+//
+//			cp.sendBack = false;
+//		}
+	}
 
-			cp.sendBack = false;
-		}
+	public void ResetCloset()
+	{
+		isHiding = false;
+		isPaused = false;
+		isEntered = false;
+		showHiding.SetActive (false);
 	}
 
     IEnumerator Wait()

@@ -34,6 +34,17 @@ public class OnScreenInstruction : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerStay(Collider instruction)
+	{
+		if (instruction.gameObject.CompareTag ("player")) 
+		{
+			if (instruction1.activeInHierarchy == false) 
+			{
+				instruction1.SetActive(true);
+			}
+		}
+	}
+
 	void OnTriggerExit(Collider instruction)
 	{
 		if (instruction.gameObject.CompareTag ("player"))
