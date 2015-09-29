@@ -133,6 +133,10 @@ public class checkPoint: MonoBehaviour
 //			// Reset func contains everything above
 //			fatDogScript.Reset ();
 //        }
+		foreach (GameObject sphere in allSpheres)
+		{
+			Destroy(sphere);
+		}
 		for (int i = 0; i < allFatDogs.Length; i++) 
 		{
 			fatDogScript = allFatDogs[i].GetComponent<fatDogAi>();
@@ -183,10 +187,6 @@ public class checkPoint: MonoBehaviour
             DoorTrigger dt = door.GetComponent<DoorTrigger>();
             dt.checkpoint();
         }       
-        foreach (GameObject sphere in allSpheres)
-        {
-            Destroy(sphere);
-        }
 		foreach (GameObject closet in allClosets) 
 		{
 			closet.GetComponent<hidingThirdPerson>().ResetCloset();
