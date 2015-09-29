@@ -153,6 +153,8 @@ public class TemporaryMovement : MonoBehaviour
 
 				Vector3 v = (Camera.main.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
 				Vector3 h = (Camera.main.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+				// Set y to 0 because we don't want to affect the y velocity of the character
+				v.y = 0.0f;
 
 				rb.MovePosition (transform.position + v + h);
 				transform.LookAt (transform.position + look, Vector3.up);

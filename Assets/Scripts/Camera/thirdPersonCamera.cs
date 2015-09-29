@@ -4,20 +4,26 @@ using System.Collections;
 public class thirdPersonCamera : MonoBehaviour {
 
 	public Transform target;
+	public bool inverseYMouse;
 	public float rotationSpeed;
 	public float zoomSpeed;
 	public float zoomDistance;
 	public float minZoomDistance;
 	public float maxZoomDistance;
+	public float minPitch;
+	public float maxPitch;
 
 	private Vector3 offset;
-	private float angle;
+	private float angleX;
+	private float angleY;
 
 	void Start ()
 	{
 		// initialize the offset position
 		offset = target.transform.position - transform.position;
-		angle = 0.0f;
+		inverseYMouse = false;
+		angleX = 0.0f;
+		angleY = 0.0f;
 	}
 	
 	void LateUpdate () 
@@ -25,12 +31,22 @@ public class thirdPersonCamera : MonoBehaviour {
 		float horizontalAngle = Input.GetAxis ("Mouse X") * rotationSpeed;
 		float verticalAngle = Input.GetAxis ("Mouse Y") * rotationSpeed;
 
-		if (angle < 360.0f) {
-			angle += horizontalAngle;
+		if (angleX < 360.0f) {
+			angleX += horizontalAngle;
 		} else {
-			angle = 0.0f;
+			angleX = 0.0f;
 		}
+		if (inverseYMouse == false) 
+		{
+			angleY += verticalAngle;
+		} else 
+		{
+			angleY -= verticalAngle;
+		}
+		// Limit the maximum and minimum value of the angleY
+		angleY = Mathf.Clamp (angleY, minPitch, maxPitch);
 
+		// Zoom using scroll wheel and limit the maximum and minimum distance
 		zoomDistance -= Input.GetAxis ("Mouse ScrollWheel") * Time.deltaTime * zoomSpeed * Mathf.Abs (zoomDistance);
 		zoomDistance = Mathf.Clamp (zoomDistance, minZoomDistance, maxZoomDistance);
 
@@ -38,11 +54,10 @@ public class thirdPersonCamera : MonoBehaviour {
 		//target.Rotate (0, horizontalAngle, 0);
 
 		// Calculate the rotation
-		Quaternion rotation = Quaternion.Euler (0, angle, 0);
+		Quaternion rotation = Quaternion.Euler (0, angleX, angleY);
 
 		// Update the position of the camera
 		transform.position = target.transform.position - (rotation * offset * zoomDistance);
-		//transform.position = target.transform.position - offset;
 
 		// Fixed the camera to look at the target (player)
 		transform.LookAt (target.position);
