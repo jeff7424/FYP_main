@@ -51,7 +51,7 @@ public class thirdPersonCamera : MonoBehaviour {
 		zoomDistance = Mathf.Clamp (zoomDistance, minZoomDistance, maxZoomDistance);
 
 		// Rotate cat
-		//target.Rotate (0, horizontalAngle, 0);
+		// target.Rotate (0, horizontalAngle, 0);
 
 		// Calculate the rotation
 		Quaternion rotation = Quaternion.Euler (0, angleX, angleY);

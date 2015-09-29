@@ -149,7 +149,12 @@ public class TemporaryMovement : MonoBehaviour
 			if (horizontal != 0 || vertical != 0) 
 			{
 				movement = new Vector3 (vertical, 0, -horizontal);
-				look = new Vector3 (horizontal, 0, vertical);
+				//Vector3 dir = Camera.main.transform.position - transform.position;
+				//dir.y = 0;
+				//look = new Vector3 (horizontal, 0, vertical);
+				//look = Camera.main.transform.position - transform.position;
+				// Reset the y because we don't need to add in the height direction to the character
+				//look.y = 0;
 
 				Vector3 v = (Camera.main.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
 				Vector3 h = (Camera.main.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
@@ -157,7 +162,12 @@ public class TemporaryMovement : MonoBehaviour
 				v.y = 0.0f;
 
 				rb.MovePosition (transform.position + v + h);
-				transform.LookAt (transform.position + look, Vector3.up);
+				//transform.LookAt (transform.position + look, Vector3.up);
+				Vector3 lookV = (Camera.main.transform.right * vertical);
+				Vector3 lookH = (Camera.main.transform.forward * horizontal);
+				lookH.y = 0.0f;
+
+				transform.LookAt(transform.position - lookV + lookH, Vector3.up);
 			}
 		}
 
