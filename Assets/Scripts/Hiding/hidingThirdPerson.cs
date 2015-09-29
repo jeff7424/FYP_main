@@ -101,13 +101,16 @@ public class hidingThirdPerson : MonoBehaviour {
 		isHiding = false;
 		isPaused = false;
 		isEntered = false;
+		if(ros.disguised == true)
+			ros.isNotDisguised("htp");
 		showHiding.SetActive (false);
+		playerScript.playerHidden = false;
 	}
 
     IEnumerator Wait()
 	{
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
 		isPaused = true;
         isHiding = true;
@@ -127,7 +130,7 @@ public class hidingThirdPerson : MonoBehaviour {
 	
 	IEnumerator Delayed()
 	{
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
 
         character.transform.position = prevPosition.transform.position;
 		//controllerCheckToExit.SetActive(false);

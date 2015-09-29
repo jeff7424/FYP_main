@@ -190,9 +190,10 @@ public class checkPoint: MonoBehaviour
 		foreach (GameObject closet in allClosets) 
 		{
 			closet.GetComponent<hidingThirdPerson>().ResetCloset();
+			Debug.Log(closet);
 		}
 		playerScript.resetCharacter();
-
+		StopAllCoroutines ();
 		sendBack = false;
     }
 }
