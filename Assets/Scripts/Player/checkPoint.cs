@@ -172,7 +172,7 @@ public class checkPoint: MonoBehaviour
         foreach(GameObject bone in allBones)
         {
             //bo = bone.gameObject.GetComponent<breakableObject>();
-            player.GetComponent<TemporaryMovement>().bonesPlaced--;
+			player.GetComponent<TemporaryMovement>().reduceBonePlacedNumber ();
             Destroy(bone);
         }
 
@@ -190,7 +190,6 @@ public class checkPoint: MonoBehaviour
 		foreach (GameObject closet in allClosets) 
 		{
 			closet.GetComponent<hidingThirdPerson>().ResetCloset();
-			Debug.Log(closet);
 		}
 		playerScript.resetCharacter();
 		StopAllCoroutines ();

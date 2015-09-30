@@ -5,16 +5,13 @@ using System.Collections.Generic;
 
 public class TemporaryMovement : MonoBehaviour
 {
+	public bool thirdPersonControls;
     public float magnMultiplier;
     public float movementSpeed;
     public float sprintModifier;
-    private float sprintSpeed;
     public float origMovementSpeed;
     public float jumpHeight;
-    float m_GroundCheckDistance;
-    float m_OrigGroundCheckDistance;
     public float duration = 0.2f;
-    float boneCooldown;
     public float defaultBoneCooldown;
     public float boneSpawnTimer;
     public float defaultBoneSpawnTimer;
@@ -23,6 +20,7 @@ public class TemporaryMovement : MonoBehaviour
     private float durationOfSpriteAnimationBag;
     public float throwForce;
     public string movieFolder;
+	private int bonesPlaced;
 
     RaycastHit hit;
 
@@ -31,6 +29,7 @@ public class TemporaryMovement : MonoBehaviour
     public int bones = 2;
     public int bags;
 
+	[HideInInspector]
     public Rigidbody rb;
 
     Animator catAnim;
@@ -62,21 +61,16 @@ public class TemporaryMovement : MonoBehaviour
 
     public AnimationClip spriteAnimationBone;
     public AnimationClip spriteAnimationBag;
-
-    [HideInInspector]
-    public float joystickPressure;
-
     public int numberOfKeys;
   
     public int[] keyPossessed = new int[4];
-    [HideInInspector]
-    public float horizontal;
-    [HideInInspector]
-    public float vertical;
-    [HideInInspector]
-    public int bonesPlaced;
-
-	public bool thirdPersonControls;
+	private float joystickPressure;
+	private float horizontal;
+    private float vertical;
+	private float sprintSpeed;
+	private float boneCooldown;
+	private float m_GroundCheckDistance;
+	private float m_OrigGroundCheckDistance;
 	private Vector3 look;
 
     IEnumerator spriteBoneTimer()
@@ -289,11 +283,18 @@ public class TemporaryMovement : MonoBehaviour
             rb.AddForce(Vector3.down * (grav / 10)); // /10 is just here so that we don't have to enter scary values in the inspector
         }
 
-        if (onLadder == true)
-        {
-            catAnim.SetBool("isOnGround", true);
-            catAnim.SetBool("isClimbing", true);
-        }
+        if (onLadder == true && catAnim.GetBool ("isOnClimbing") == false) 
+		{
+			catAnim.SetBool ("isOnGround", true);
+			catAnim.SetBool ("isClimbing", true);
+		} 
+		else if (onLadder == true && catAnim.GetBool ("isOnClimbing") == true)
+		{
+			if (movement.magnitude > 0.5f)
+			{
+				catAnim.speed = movement.magnitude;
+			}
+		}
     }
 
     void sprint()
@@ -452,6 +453,14 @@ public class TemporaryMovement : MonoBehaviour
             }
         }
     }
+
+	public void reduceBonePlacedNumber()
+	{
+		if (bonesPlaced > 0) 
+		{
+			bonesPlaced--;
+		}
+	}
 
     public void resetKeys()
     {

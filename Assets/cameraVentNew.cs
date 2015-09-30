@@ -10,6 +10,7 @@ public class CameraVentNew : MonoBehaviour
     public AnimationClip camAnimation; // the movement of the cam
 
     public GameObject button;
+	public Transform character;
 
     private float durationOfAnim; // duration of the cam anim
 
@@ -23,8 +24,8 @@ public class CameraVentNew : MonoBehaviour
     {
         scriptedCam.enabled = false;
 		durationOfAnim = camAnimation.length;
-        playerMovement = GameObject.Find("Char_Cat").GetComponent<TemporaryMovement>();
-        obstructD = GameObject.Find("Target 1").GetComponent<ObstructionDetector>();
+        playerMovement = character.GetComponent<TemporaryMovement>();
+        obstructD = mainCam.GetComponent<ObstructionDetector>();
 		//obstructD = mainCam.GetComponent<ObstructionDetector> ();
     }
 
@@ -32,7 +33,7 @@ public class CameraVentNew : MonoBehaviour
     {
         if (isDone == false)
         {
-            if (other.gameObject.tag == "player")
+            if (other.gameObject.CompareTag ("player"))
             {
                 if (isDone == false) isActivated = true;
 

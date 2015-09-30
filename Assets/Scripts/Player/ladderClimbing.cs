@@ -5,34 +5,33 @@ using UnityStandardAssets.CrossPlatformInput;
 
 public class ladderClimbing : MonoBehaviour
 {
-	private TemporaryMovement climbMovement;
+	private TemporaryMovement characterMovement;
 
-	public Transform characterController;
+	public Transform character;
 	public bool inside = false;
 	public float heightFactor;
 		
 	void Start()
 	{
-		climbMovement = GameObject.Find("Char_Cat").GetComponent<TemporaryMovement>();
+		characterMovement = character.GetComponent<TemporaryMovement>();
 	}
 		
-	void OnTriggerEnter(Collider ladder)
+	void OnTriggerEnter(Collider player)
 	{
-		if (ladder.gameObject.CompareTag ("player"))
+		if (player.gameObject.CompareTag ("player"))
 		{
-            ladder.GetComponent<TemporaryMovement>().onLadder = true;
+			player.GetComponent<TemporaryMovement>().onLadder = true;
 
-            if (climbMovement.movement.magnitude > 1)
-            {    
-                climbMovement.rb.useGravity = false;
-                climbMovement.enabled = false;
-            }
-            
-            else
-            {
-                climbMovement.rb.useGravity = true;
-                climbMovement.enabled = true;
-            }
+			//if (characterMovement.movement.magnitude > 0.5f)
+           // {    
+				characterMovement.rb.useGravity = false;
+				//characterMovement.enabled = false;
+           // }
+//            else
+//            {
+//				characterMovement.rb.useGravity = true;
+//				characterMovement.enabled = true;
+//            }
 			//inside = !inside;
             inside = true;
 		}
@@ -43,17 +42,17 @@ public class ladderClimbing : MonoBehaviour
        // ladder.GetComponent<TemporaryMovement>().onLadder = false;
 		if (ladder.gameObject.CompareTag ("player"))
 		{
-			climbMovement.enabled = true;
-            climbMovement.rb.useGravity = true;
+			characterMovement.enabled = true;
+			characterMovement.rb.useGravity = true;
             inside = false;
 		}
 	}
 		
 	void Update()
 	{
-        if (inside == true && climbMovement.movement.magnitude > 0.01f)
+		if (inside == true && characterMovement.movement.magnitude > 0.01f)
 		{
-            climbMovement.transform.position += Vector3.up / heightFactor * climbMovement.movement.magnitude;
+			characterMovement.transform.position += Vector3.up * characterMovement.movementSpeed * Time.deltaTime * characterMovement.movement.magnitude;
 		}
 
         //print("MAGNITUDE: " + characterController.GetComponent<TemporaryMovement>().movement.magnitude);

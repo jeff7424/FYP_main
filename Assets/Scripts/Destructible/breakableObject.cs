@@ -5,39 +5,48 @@ using System.Collections;
 //-----------------------------------------------------//
 public class breakableObject: MonoBehaviour 
 {
-    GameObject newSphere;
-    GameObject brokenObject;
-    float maxScale = 0.0f;
-    public GameObject Sphere;
-    public GameObject brokenSphere;
-    public GameObject brokenCube;
-    public TemporaryMovement playerMovement;
-    GameObject bone;
     public bool makeSound = false;
-    public float timer = 60.0f;
-    public float expireTimer = 10;
+    public float timer;
+	public float defaultTimer = 1.0f;
+    public float expireTimer = 10.0f;
     public float boneRadius;
     public float ballRadius;
     public float cubeRadius;
-    soundSphere sphereScript;
-	sfxPlayer SFX;
-    bool isGrounded;
-    float m_GroundCheckDistance;
-    Rigidbody rb;
+	public GameObject Sphere;
+	public GameObject brokenSphere;
+	public GameObject brokenCube;
+	public TemporaryMovement playerMovement;
+
+	private bool isGrounded;
+	private float m_GroundCheckDistance;
+	private float maxScale = 0.0f;
+	private GameObject newSphere;
+	private GameObject brokenObject;
+	private GameObject bone;
+	private soundSphere sphereScript;
+	private sfxPlayer SFX;
+	private Rigidbody rb;
 
 	void Start () 
     {
         //---------------------------------------------------//
         // set the volume of the sound sphere for this object//
         //---------------------------------------------------//
-        if (this.gameObject.tag == "bottle")
-            maxScale = 30.0f;
-        else if (this.gameObject.tag == "glass")
-            maxScale = 40.0f;
-        else if(this.gameObject.tag == "jar")
-        {
-            maxScale = 50.0f;
-        }
+        if (this.gameObject.CompareTag ("bottle")) 
+		{
+			maxScale = 30.0f;
+		} 
+		else if (this.gameObject.CompareTag ("glass")) 
+		{
+			maxScale = 40.0f;
+		} 
+		else if (this.gameObject.CompareTag ("jar")) 
+		{
+			maxScale = 50.0f;
+		}
+
+		timer = defaultTimer;
+
         playerMovement = GameObject.FindGameObjectWithTag("player").GetComponent<TemporaryMovement>();
 		//SFX = GameObject.Find ("SFX").GetComponent<sfxPlayer>();
 
@@ -48,48 +57,42 @@ public class breakableObject: MonoBehaviour
         }
         
 	}
-	
-	// Update is called once per frame
+
 	void Update () 
     {
         //---------------------------------------------//
         // expands the sound sphere until maximum range//
         //---------------------------------------------//
 
-        if (this.gameObject.tag == "bone")
+        if (this.gameObject.CompareTag ("bone"))
         {
-            if(timer <=0)
+            if(timer <= 0.0f)
             {
-            
-            makeSound = false;
-            timer += 60;
+	            makeSound = false;
+	            timer += defaultTimer;
                 newSphere = (GameObject)Instantiate(Sphere, this.transform.localPosition, Quaternion.identity);
                 newSphere.transform.parent = transform;
                 newSphere.tag = "bone";
                 sphereScript = newSphere.GetComponent<soundSphere>();
                 sphereScript.setMaxDiameter(boneRadius);
                 expireTimer--;
-            
             }
-            timer--;
-
+            timer -= Time.deltaTime;
         }
 
-		if (this.gameObject.tag == "bagOfAir")
+		else if (this.gameObject.CompareTag ("bagOfAir"))
 		{
-			if(timer <=0)
+			if(timer <= 0)
 			{
-				
 				makeSound = false;
-				timer += 60;
+				timer += defaultTimer;
 				newSphere = (GameObject)Instantiate(Sphere, this.transform.localPosition, Quaternion.identity);
 				newSphere.transform.parent = transform;
 				sphereScript = newSphere.GetComponent<soundSphere>();
 				sphereScript.setMaxDiameter(boneRadius);
 				expireTimer--;
-				
 			}
-			timer--;
+			timer -= Time.deltaTime;
 			
 		}
 
@@ -104,12 +107,11 @@ public class breakableObject: MonoBehaviour
    void FixedUpdate()
     {
         //uses raycast to check if bone is grounded
-        if (this.gameObject.tag == "bone")
+        if (this.gameObject.CompareTag ("bone"))
         {
             checkGroundStatus();
             if (isGrounded)
             {
-               
                 rb.useGravity = false;
                 rb.velocity = Vector3.zero;
                 rb.angularVelocity = Vector3.zero;
@@ -124,35 +126,37 @@ public class breakableObject: MonoBehaviour
         // When object falls to the ground it creates a sound sphere//
         //----------------------------------------------------------//
         //if(makeSound)
-        if(Other.gameObject.tag == "player")
+        if(Other.gameObject.CompareTag ("player"))
         {
             makeSound = true;
         }
         if (this.transform.position.y <= 0.5f && makeSound == true)
+        {
+            //makeSound = false;
             {
-                //makeSound = false;
-                {
-                    objectBreaking();
-					SFX.playGlassBreak();
-                }
+                objectBreaking();
+				SFX.playGlassBreak();
             }
+        }
     }
 
     public void ObjectFalling()
     {    
         makeSound = true;
     }
+
     public void destroySelf()
     {
-        if(gameObject.tag == "bone")
+        if(gameObject.CompareTag ("bone"))
         {
-            playerMovement.bonesPlaced--;
+			playerMovement.reduceBonePlacedNumber();
         }
         Destroy(gameObject);
     }
+
     public void objectBreaking()
     {
-        if (this.gameObject.tag == "bottle")
+        if (this.gameObject.CompareTag ("bottle") || this.gameObject.CompareTag ("jar"))
         {
             brokenObject = (GameObject)Instantiate(brokenSphere, this.transform.position, Quaternion.identity);
             newSphere = (GameObject)Instantiate(Sphere, this.transform.position, Quaternion.identity);
@@ -162,7 +166,7 @@ public class breakableObject: MonoBehaviour
             destroySelf();
         }
 
-        if (this.gameObject.tag == "glass")
+        else if (this.gameObject.CompareTag ("glass"))
         {
             brokenObject = (GameObject)Instantiate(brokenCube, this.transform.localPosition, Quaternion.identity);
             newSphere = (GameObject)Instantiate(Sphere, this.transform.position, Quaternion.identity);
@@ -172,16 +176,17 @@ public class breakableObject: MonoBehaviour
             destroySelf();
         }
 
-        if (this.gameObject.tag == "jar")
-        {
-            brokenObject = (GameObject)Instantiate(brokenSphere, this.transform.position, Quaternion.identity);
-            newSphere = (GameObject)Instantiate(Sphere, this.transform.position, Quaternion.identity);
-            newSphere.transform.parent = brokenObject.transform;
-            sphereScript = newSphere.GetComponent<soundSphere>();
-            sphereScript.setMaxDiameter(maxScale);
-            destroySelf();
-        }
+//        if (this.gameObject.CompareTag ("jar"))
+//        {
+//            brokenObject = (GameObject)Instantiate(brokenSphere, this.transform.position, Quaternion.identity);
+//            newSphere = (GameObject)Instantiate(Sphere, this.transform.position, Quaternion.identity);
+//            newSphere.transform.parent = brokenObject.transform;
+//            sphereScript = newSphere.GetComponent<soundSphere>();
+//            sphereScript.setMaxDiameter(maxScale);
+//            destroySelf();
+//        }
     }
+
     void checkGroundStatus()
     {
         RaycastHit hitInfo;
