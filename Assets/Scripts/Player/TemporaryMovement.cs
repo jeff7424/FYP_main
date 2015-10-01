@@ -72,6 +72,7 @@ public class TemporaryMovement : MonoBehaviour
 	private float m_GroundCheckDistance;
 	private float m_OrigGroundCheckDistance;
 	private Vector3 look;
+	public Camera mainCam;
 
     IEnumerator spriteBoneTimer()
     {
@@ -111,6 +112,7 @@ public class TemporaryMovement : MonoBehaviour
         durationOfSpriteAnimationBone = spriteAnimationBone.length;
         durationOfSpriteAnimationBag = spriteAnimationBag.length;
         isEsc = !isEsc;
+		//mainCam = Camera.main;
 
 		//numberOfBones = GetComponent<Text>().text--;
     }
@@ -127,9 +129,11 @@ public class TemporaryMovement : MonoBehaviour
         boneSpawner = GameObject.FindGameObjectWithTag("boneSpawner");
         checkGroundStatus();
 
-		horizontal = Input.GetAxis("Horizontal");
-		vertical = Input.GetAxis("Vertical");
-
+		if (playerHidden == false) 
+		{
+			horizontal = Input.GetAxis ("Horizontal");
+			vertical = Input.GetAxis ("Vertical");
+		}
 
 		if (thirdPersonControls == false) 
 		{
@@ -144,16 +148,16 @@ public class TemporaryMovement : MonoBehaviour
 			{
 				movement = new Vector3 (vertical, 0, -horizontal);
 
-				Vector3 v = (Camera.main.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
-				Vector3 h = (Camera.main.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+				Vector3 v = (mainCam.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+				Vector3 h = (mainCam.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
 				// Set y to 0 because we don't want to add the y to the velocity of the character
 				v.y = 0.0f;
 				h.y = 0.0f;
 
 				rb.MovePosition (transform.position + v + h);
 
-				Vector3 lookV = (Camera.main.transform.right * vertical);
-				Vector3 lookH = (Camera.main.transform.forward * horizontal);
+				Vector3 lookV = (mainCam.transform.right * vertical);
+				Vector3 lookH = (mainCam.transform.forward * horizontal);
 				lookH.y = 0.0f;
 
 				transform.LookAt(transform.position - lookV + lookH, Vector3.up);
@@ -257,7 +261,7 @@ public class TemporaryMovement : MonoBehaviour
                 boneSpawnTimer = defaultBoneSpawnTimer;
             }
         }
-        if (boneSpawnTimer > 0)
+        else if (boneSpawnTimer > 0)
         {
             boneSpawnTimer -= Time.deltaTime;
         }
@@ -323,19 +327,16 @@ public class TemporaryMovement : MonoBehaviour
             */
             // WALK / Sprint WITH THE USE OF A BUTTON
 
-
             if (Input.GetButton("Sprint") && movement.magnitude > 0.1)
             {
                 catAnim.SetBool("isSprinting", true);
                 movementSpeed = sprintSpeed;
             }
-
             else
             {
                 catAnim.SetBool("isSprinting", false);
                 movementSpeed = origMovementSpeed;
             }
-
         }
     }
 
@@ -443,7 +444,6 @@ public class TemporaryMovement : MonoBehaviour
                 cone.isDisguised();
             }
         }
-
         else if (!disguisedAsDog)
         {
             foreach (GameObject enemy in enemies)

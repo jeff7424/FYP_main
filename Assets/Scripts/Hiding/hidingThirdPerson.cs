@@ -4,28 +4,32 @@ using System.Collections;
 
 public class hidingThirdPerson : MonoBehaviour {
 
-	private ringOfSmell ros;
-
-	private checkPoint cp;
-
+	public bool isHiding;
+	public bool isPaused;
+	public bool isEntered;
     public Transform character;
     public Transform prevPosition;
     public Transform hidingPosition;
+	public Transform cameraPosition;
     public TemporaryMovement playerScript;
-
 	public GameObject showHiding;
 
-    public bool isHiding;
-	public bool isPaused;
-
-	public bool isEntered = false;
+	private ringOfSmell ros;
+	private thirdPersonCamera characterCamera;
+	//private checkPoint cp;
 
 	void Start () 
 	{
-		cp = character.GetComponent<checkPoint>();
+		isHiding = false;
+		isPaused = false;
+		isEntered = false;
+
+		//cp = character.GetComponent<checkPoint>();
 		ros = character.FindChild ("Smell ring FBX").GetComponent<ringOfSmell>();
 		playerScript = character.GetComponent<TemporaryMovement>();
-
+		characterCamera = playerScript.mainCam.GetComponent<thirdPersonCamera> ();
+		//cameraPosition.localRotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
+		//Debug.Log (cameraPosition.eulerAngles.y);
 		showHiding.SetActive(false);
 	}
 
@@ -33,21 +37,26 @@ public class hidingThirdPerson : MonoBehaviour {
     {	
 		if (catType.CompareTag ("player"))
 		{	
-
 			isEntered = true;
 			//keyboardCheckToEnter.SetActive(true);
 			//controllerCheckToEnter.SetActive(true);
-			
-			if (isHiding == false)
-			{
-				showHiding.SetActive(false);
 
-				if (Input.GetButtonDown("Interact"))
+			if (Input.GetButtonDown ("Interact"))
+			{
+				if (isHiding == false)
 				{
-					character.transform.position = hidingPosition.transform.position;
-                    playerScript.playerHidden = true;
-					StartCoroutine(Wait());
+					if (Input.GetButtonDown("Interact"))
+					{
+						StartCoroutine(Wait());
+					}
 				}
+				else if (isHiding == true) 
+				{
+					if (Input.GetButtonDown("Interact"))
+					{
+						StartCoroutine (Delayed ());
+					}
+				} 
 			}
 		}
     }
@@ -62,36 +71,22 @@ public class hidingThirdPerson : MonoBehaviour {
 		//controllerCheckToEnter.SetActive(false);
 	}
 
-	void Update ()
-    { 
-
-        if (isHiding == true) 
-		{
-			if (Input.GetButtonDown("Interact"))
-			{
-				StartCoroutine (Delayed ());
-
-				isHiding = false;
-				isPaused = false;            
-                if(ros.disguised == true)
-            	ros.isNotDisguised("htp");
-                playerScript.playerHidden = false;
-
-		
-			}
-		} 
-
-//		if (cp.sendBack == true) 
-//        {
-//			isHiding = false;
-//			isPaused = false;    
-//			
-//			//checkToEnter.enabled = false;
-//			//checkToExit.enabled = false;
+//	void Update ()
+//    { 
+//        if (isHiding == true) 
+//		{
+//			if (Input.GetButtonDown("Interact"))
+//			{
+//				StartCoroutine (Delayed ());
 //
-//			cp.sendBack = false;
-//		}
-	}
+//				isHiding = false;
+//				isPaused = false;            
+//                if(ros.disguised == true)
+//            	ros.isNotDisguised("htp");
+//                playerScript.playerHidden = false;
+//			}
+//		} 
+//	}
 
 	public void ResetCloset()
 	{
@@ -106,7 +101,6 @@ public class hidingThirdPerson : MonoBehaviour {
 
     IEnumerator Wait()
 	{
-
         yield return new WaitForSeconds(0.05f);
 
 		isPaused = true;
@@ -115,25 +109,37 @@ public class hidingThirdPerson : MonoBehaviour {
         if(ros.disguised == false)
         	ros.isDisguised("htp");
 
-
 		showHiding.SetActive(true);
+		character.transform.position = hidingPosition.transform.position;
+		characterCamera.SetHidingPosition(cameraPosition.position);
+		Debug.Log (cameraPosition.eulerAngles.y);
+		characterCamera.SetHidingRotation (cameraPosition.eulerAngles.y);
+		characterCamera.transform.localRotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
+		playerScript.playerHidden = true;
 		//keyboardCheckToEnter.SetActive(false);
 		//keyboardCheckToExit.SetActive(true);
 
 		//controllerCheckToEnter.SetActive(false);
 		//controllerCheckToExit.SetActive(true);
-        
 	}
 	
 	IEnumerator Delayed()
 	{
         yield return new WaitForSeconds(0.05f);
+		
+		isHiding = false;
+		isPaused = false;
 
-        character.transform.position = prevPosition.transform.position;
+		if(ros.disguised == true)
+			ros.isNotDisguised("htp");
+
+		showHiding.SetActive(false);
+		character.transform.position = prevPosition.transform.position;
+		characterCamera.ResetHidingPosition ();
+		//characterCamera.ResetHidingRotation ();
+		playerScript.playerHidden = false;
+
 		//controllerCheckToExit.SetActive(false);
 		//keyboardCheckToExit.SetActive(false);
-		
-   
 	}
-
 }
