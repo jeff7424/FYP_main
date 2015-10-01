@@ -148,14 +148,16 @@ public class TemporaryMovement : MonoBehaviour
 			{
 				movement = new Vector3 (vertical, 0, -horizontal);
 
-				Vector3 v = (mainCam.transform.forward * vertical) * (movementSpeed + movement.magnitude) * Time.deltaTime;
-				Vector3 h = (mainCam.transform.right * horizontal) * (movementSpeed + movement.magnitude) * Time.deltaTime;
+				// Calculate the direction to move to
+				Vector3 v = (mainCam.transform.forward * vertical);
+				Vector3 h = (mainCam.transform.right * horizontal);
 				// Set y to 0 because we don't want to add the y to the velocity of the character
 				v.y = 0.0f;
 				h.y = 0.0f;
 
-				rb.MovePosition (transform.position + v + h);
+				rb.MovePosition (transform.position + (v.normalized + h.normalized) * (movementSpeed + movement.magnitude) * Time.deltaTime);
 
+				// Calculate the rotation of the character
 				Vector3 lookV = (mainCam.transform.right * vertical);
 				Vector3 lookH = (mainCam.transform.forward * horizontal);
 				lookH.y = 0.0f;
