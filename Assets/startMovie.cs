@@ -8,7 +8,7 @@ public class startMovie : MonoBehaviour {
 	// Use this for initialization
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             PlayerPrefs.SetInt("Scene", nextScene);
             PlayerPrefs.SetString("Movie", movieFolder);

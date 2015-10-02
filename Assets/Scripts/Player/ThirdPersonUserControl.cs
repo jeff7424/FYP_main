@@ -107,7 +107,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                 Rigidbody body = hit.collider.attachedRigidbody;
                 if (body == null) { return; }
 
-                if (hit.gameObject.tag == "ball")
+                if (hit.gameObject.CompareTag ("Ball"))
                 {
                     body.isKinematic = false;
                     Debug.Log("Toimii");
@@ -116,7 +116,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
                     body.velocity = pushDir * pushForce;
                     hit.gameObject.SendMessage("ObjectFalling", SendMessageOptions.DontRequireReceiver);
                 }
-                if (hit.gameObject.tag == "cube")
+                else if (hit.gameObject.CompareTag("Cube"))
                 {
                     body.isKinematic = false;
                     Debug.Log("Toimii");

@@ -9,7 +9,7 @@ public class hazardTrigger : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		haz = GameObject.Find ("floorHazard").GetComponent<floorHazards>();
+		haz = GameObject.Find ("FloorHazard").GetComponent<floorHazards>();
 	}
 	
 	// Update is called once per frame

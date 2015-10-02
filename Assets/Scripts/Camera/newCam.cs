@@ -16,8 +16,6 @@ public class newCam : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		isSecondary = false;
-
-	
 	}	
 	
 	// Update is called once per frame

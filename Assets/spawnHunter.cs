@@ -21,9 +21,9 @@ public class spawnHunter : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
 	{
-        if (other.gameObject.CompareTag ("soundSphere"))
+        if (other.gameObject.CompareTag ("SoundSphere"))
         {
-            if (other.transform.parent.CompareTag ("bone") == false)
+            if (other.transform.parent.CompareTag ("Bone") == false)
             {
                 if (spawnedHunters < 1)
                 {

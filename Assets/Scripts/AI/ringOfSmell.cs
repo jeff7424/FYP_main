@@ -80,34 +80,34 @@ public class ringOfSmell : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag ("enemy"))
+        if (other.gameObject.CompareTag ("Enemy"))
         {
             script = other.GetComponent<enemyPathfinding>();
             smellDetected = true;
         }
-        else if(other.gameObject.CompareTag ("huntingDog"))
+        else if(other.gameObject.CompareTag ("HuntingDog"))
         {
             huntingDogScript = other.GetComponent<huntingDog>();
             smellDetected = true;
         }
-        else if(other.gameObject.CompareTag ("fatDog"))
+        else if(other.gameObject.CompareTag ("FatDog"))
         {
             scriptFatDog = other.GetComponent<fatDogAi>();
             smellDetected = true;
         }
-        else if(other.gameObject.CompareTag ("looker"))
+        else if(other.gameObject.CompareTag ("Looker"))
         {
-            if (other.transform.parent.CompareTag ("enemy"))
+            if (other.transform.parent.CompareTag ("Enemy"))
             {
                 script = other.transform.parent.GetComponent<enemyPathfinding>();
                 smellDetected = true;
             }
-            else if (other.transform.parent.CompareTag ("huntingDog"))
+            else if (other.transform.parent.CompareTag ("HuntingDog"))
             {
                 huntingDogScript = other.transform.parent.GetComponent<huntingDog>();
                 smellDetected = true;
             }
-            else if (other.transform.parent.CompareTag ("fatDog"))
+            else if (other.transform.parent.CompareTag ("FatDog"))
             {
                 scriptFatDog = other.transform.parent.GetComponent<fatDogAi>();
                 smellDetected = true;
@@ -120,7 +120,7 @@ public class ringOfSmell : MonoBehaviour {
         //-----------------------------------------------------------------------//
         //if player crosses the cone, informs the parent(Enemy) of visible player//
         //-----------------------------------------------------------------------//  
-		if (other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog"))
+		if (other.gameObject.CompareTag ("Enemy") || other.gameObject.CompareTag ("HuntingDog") || other.gameObject.CompareTag ("FatDog"))
         {
             Physics.Linecast(transform.parent.position, other.transform.position, out hit);
             Debug.DrawLine(transform.parent.position, other.transform.position, Color.cyan);
@@ -178,7 +178,7 @@ public class ringOfSmell : MonoBehaviour {
     }
     void OnTriggerExit(Collider other)
     {
-		if (other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog"))
+		if (other.gameObject.CompareTag ("Enemy") || other.gameObject.CompareTag ("HuntingDog") || other.gameObject.CompareTag ("FatDog"))
         {
             if (smellingPlayer)
             {

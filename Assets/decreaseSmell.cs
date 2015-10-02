@@ -10,13 +10,13 @@ public class decreaseSmell : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("player");
+        player = GameObject.FindGameObjectWithTag("Player");
         script = player.GetComponentInChildren<ringOfSmell>();
     }
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag ("player") || other.gameObject.CompareTag ("smell"))
+        if (other.gameObject.CompareTag ("Player") || other.gameObject.CompareTag ("Smell"))
         {
             script.decreaseSmell(value);
         }

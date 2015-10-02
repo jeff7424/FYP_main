@@ -21,7 +21,7 @@ public class Key : MonoBehaviour
  
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
 			inventory.inventoryArray[1]++;
 

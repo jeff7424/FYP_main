@@ -232,8 +232,8 @@ public class enemyPathfinding : MonoBehaviour
     {
         respawnPosition = this.transform.position;
         dodgeTimer = defaultDodgeTimer;
-        visionRotator = GameObject.FindGameObjectWithTag("visionRotator");        
-        player = GameObject.FindGameObjectWithTag("player");
+        visionRotator = GameObject.FindGameObjectWithTag("VisionRotator");        
+        player = GameObject.FindGameObjectWithTag("Player");
         ringOfSmellScript = player.GetComponentInChildren<ringOfSmell>();
         coneOfVisionScript = GetComponentInChildren<coneOfVision>();
         patrolAnim = gameObject.GetComponent<Animator>();
@@ -359,7 +359,7 @@ public class enemyPathfinding : MonoBehaviour
                 {                       
                     if (idleTimer <= 0)
                     {
-                        if (currentTarget.gameObject.tag != "bone")
+                        if (currentTarget.gameObject.CompareTag ("Bone") == false)
                         {
                             lastTarget = currentTarget;
                         }
@@ -461,7 +461,7 @@ public class enemyPathfinding : MonoBehaviour
                 {
                     newSphere = (GameObject)Instantiate(sphere, this.transform.position, Quaternion.identity);
                     newSphere.transform.parent = transform;
-                    newSphere.tag = "sound";
+                    newSphere.tag = "Sound";
                     barkTimer = defaultBarkTimer;
                     if (newSphere)
                     {
@@ -514,7 +514,7 @@ public class enemyPathfinding : MonoBehaviour
                 else
                 {
                     agent.speed = chaseSpeed;
-                    if (currentTarget != player.transform && currentTarget.CompareTag ("bone") == false)
+                    if (currentTarget != player.transform && currentTarget.CompareTag ("Bone") == false)
                     {
                         lastTarget = currentTarget;
                     }
@@ -557,7 +557,7 @@ public class enemyPathfinding : MonoBehaviour
 	            {
 	                if (timer <= 0 && (!distracted))
 	                {
-	                    if (currentTarget != null && currentTarget.gameObject.CompareTag ("bone") == false)
+	                    if (currentTarget != null && currentTarget.gameObject.CompareTag ("Bone") == false)
 	                    {
 	                        lastTarget = currentTarget;
 	                    }
@@ -719,7 +719,7 @@ public class enemyPathfinding : MonoBehaviour
             {
 				if (soundSource != null) 
 				{
-                    if (soundSource.CompareTag ("sound"))
+                    if (soundSource.CompareTag ("Bone"))
                     {                        
                         if (isPatrolling)
                         {
@@ -733,7 +733,7 @@ public class enemyPathfinding : MonoBehaviour
 
                             patrolAnim.SetBool("patrolRun", false);
 
-                            if (soundSource && soundSource.CompareTag ("bone") == false && randomPointSelected == false)
+                            if (soundSource && soundSource.CompareTag ("Bone") == false && randomPointSelected == false)
                             {
                                 if (RandomPoint(soundSource.transform.position, maxRange, out soundSourcePos))
                                 {
@@ -743,7 +743,7 @@ public class enemyPathfinding : MonoBehaviour
                                     currentTarget = tempWaypointPos;//soundSourcePos;
                                 }
                             }
-                            else if (soundSource && soundSource.CompareTag ("bone"))
+                            else if (soundSource && soundSource.CompareTag ("Bone"))
                             {
                                 currentTarget = soundSource.transform;
                             }
@@ -772,7 +772,7 @@ public class enemyPathfinding : MonoBehaviour
 										rb.velocity = Vector3.zero;
 
                                     }
-                                    if (soundSource.CompareTag ("bone"))//(hit.collider.tag == "bone")
+                                    if (soundSource.CompareTag ("Bone"))//(hit.collider.tag == "bone")
                                     {
                                         randomPointSelected = false;
 										stateManager((int)enumStates.eatBone);
@@ -800,7 +800,7 @@ public class enemyPathfinding : MonoBehaviour
                         }
 
                     }
-                    else if (soundSource.CompareTag ("bone"))
+                    else if (soundSource.CompareTag ("Bone"))
                     {
                        // if (smellDetectedBefore)
                        // {
@@ -828,7 +828,7 @@ public class enemyPathfinding : MonoBehaviour
                     isPatrolling = false;
                 }
                 patrolAnim.SetBool("patrolRun", false);
-                if (soundSource != null && soundSource.CompareTag ("bone"))
+                if (soundSource != null && soundSource.CompareTag ("Bone"))
                 {
                     bone = soundSource;
                 }                        
@@ -1466,9 +1466,9 @@ public class enemyPathfinding : MonoBehaviour
 	    if (States != enumStates.smell)
 	    {
 	        turnTowardsSmellTimer -= Time.deltaTime;
-	        if (turnTowardsSmellTimer <= 0)
+	        if (turnTowardsSmellTimer <= 0.0f)
 	        {
-	            turnTowardsSmellTimer = 0;
+	            turnTowardsSmellTimer = 0.0f;
 	            SeekForSmellSource = true;
 	            rotateDogWhileSmelling(targetTransformPosition);
 	        }   

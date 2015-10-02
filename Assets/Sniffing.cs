@@ -14,7 +14,7 @@ public class Sniffing : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player" && !enemyPathfindingScript.States.Equals(enumStates.chase))
+        if (other.gameObject.CompareTag ("Player") && !enemyPathfindingScript.States.Equals(enumStates.chase))
         {
 			audioSource.Play();
             //print("OnTriggerEnter");
@@ -23,7 +23,7 @@ public class Sniffing : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "player")
+		if (other.gameObject.CompareTag ("Player"))
         {
 			if (!audioSource.isPlaying) audioSource.Play();
             //print("OnTriggerStay");
@@ -32,7 +32,7 @@ public class Sniffing : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "player")
+		if (other.gameObject.CompareTag ("Player"))
         {
 			if (audioSource.isPlaying) audioSource.Stop();
             //print("OnTriggerExit");

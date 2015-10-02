@@ -27,7 +27,7 @@ public class playerMovement : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-        boneSpawner = GameObject.FindGameObjectWithTag("boneSpawner");
+        boneSpawner = GameObject.FindGameObjectWithTag("BoneSpawner");
 	}
 	// Update is called once per frame
 	void Update () 
@@ -120,7 +120,7 @@ public class playerMovement : MonoBehaviour
             Rigidbody body = Hit.collider.attachedRigidbody;
             if (body == null) { return; }
                     
-            if (Hit.gameObject.tag == "ball")
+            if (Hit.gameObject.CompareTag ("Ball"))
             {   
                 body.isKinematic = false;
                 pushForce = 2.0f;
@@ -128,7 +128,7 @@ public class playerMovement : MonoBehaviour
                 body.velocity = pushDir * pushForce;
                 Hit.gameObject.SendMessage("ObjectFalling", SendMessageOptions.DontRequireReceiver);
             }
-            if(Hit.gameObject.tag == "cube")
+            if(Hit.gameObject.CompareTag ("Cube"))
             {
                 body.isKinematic = false;
                 pushForce = 50.0f;

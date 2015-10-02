@@ -13,9 +13,11 @@ public class ObstructionDetector : MonoBehaviour {
 	void FixedUpdate()
 	{
 		// If the list is not empty
-		if (lastWalls != null) {
+		if (lastWalls != null) 
+		{
 			// Set all the walls to normal
-			foreach (Wall wall in lastWalls) {
+			foreach (Wall wall in lastWalls) 
+			{
 				wall.SetToNormal ();
 			}
 			// Remove all walls from the list
@@ -32,7 +34,7 @@ public class ObstructionDetector : MonoBehaviour {
 		{
 			RaycastHit hit = rayCastHit[i];
 
-			if (hit.transform.CompareTag ("wall"))
+			if (hit.transform.CompareTag ("Wall"))
 			{
 				Wall wall = hit.transform.GetComponent<Wall>();
 				if (wall)

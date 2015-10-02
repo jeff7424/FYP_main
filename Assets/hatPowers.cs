@@ -96,8 +96,8 @@ public class hatPowers : MonoBehaviour
     void disGuiseAsDog()
     {
         enemies.Clear();
-        patrolEnemy = GameObject.FindGameObjectsWithTag("enemy");
-        hunterEnemy = GameObject.FindGameObjectsWithTag("huntingDog");
+        patrolEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+        hunterEnemy = GameObject.FindGameObjectsWithTag("HuntingDog");
         foreach (GameObject enemy in patrolEnemy)
         {
             enemies.Add(enemy);

@@ -16,9 +16,7 @@ public class levelSelectScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-
 		fading = GameObject.Find ("Fading").GetComponent<fade>();
-		
 
 		notAvailable = notAvailable.GetComponent<Canvas> ();
 		levelOne = levelOne.GetComponent<Button> ();
@@ -26,10 +24,7 @@ public class levelSelectScript : MonoBehaviour {
 		levelThree = levelThree.GetComponent<Button> ();
 		backToMain = backToMain.GetComponent<Button> ();
 
-		
 		notAvailable.enabled = false;
-
-	
 	}
 
 	public void onePress()
@@ -39,7 +34,6 @@ public class levelSelectScript : MonoBehaviour {
         PlayerPrefs.SetInt("Scene", 3);
         PlayerPrefs.Save();
 		StartCoroutine(fadeChange());
-
 	}
 
 	public void twoPress()

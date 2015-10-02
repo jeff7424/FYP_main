@@ -14,7 +14,7 @@ public class destroyableTrigger : MonoBehaviour {
 	}
     void OnTriggerStay(Collider other)
     {
-        if (other.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Return))
             {

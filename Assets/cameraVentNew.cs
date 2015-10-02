@@ -33,7 +33,7 @@ public class CameraVentNew : MonoBehaviour
     {
         if (isDone == false)
         {
-            if (other.gameObject.CompareTag ("player"))
+            if (other.gameObject.CompareTag ("Player"))
             {
                 if (isDone == false) isActivated = true;
 

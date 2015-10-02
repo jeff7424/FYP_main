@@ -37,7 +37,7 @@ public class DisplayInstruction : MonoBehaviour
 
 	void OnTriggerEnter(Collider fadingText)
 	{
-		if (fadingText.gameObject.CompareTag ("player"))
+		if (fadingText.gameObject.CompareTag ("Player"))
 		{
 			StartCoroutine(FadeIn());
 
@@ -47,7 +47,7 @@ public class DisplayInstruction : MonoBehaviour
 
 	void OnTriggerExit(Collider fadingText)
     {
-		if (fadingText.gameObject.CompareTag ("player"))
+		if (fadingText.gameObject.CompareTag ("Player"))
 		{
 			StartCoroutine(FadeOut());
 		}

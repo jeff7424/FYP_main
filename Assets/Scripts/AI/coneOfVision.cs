@@ -60,11 +60,11 @@ public class coneOfVision : MonoBehaviour
 
 	void OnTriggerEnter (Collider other)
 	{
-        if (other.gameObject.CompareTag("player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             Physics.Linecast(transform.position, other.transform.position, out hit);
             Debug.DrawLine(transform.position, other.transform.position, Color.green);
-            if (hit.collider.CompareTag("player"))//other.tag)
+            if (hit.collider.CompareTag("Player"))//other.tag)
             {
                 chaseTransScript.playSting();
             }
@@ -84,7 +84,7 @@ public class coneOfVision : MonoBehaviour
         //-----------------------------------------------------------------------//
         //if player crosses the cone, informs the parent(Enemy) of visible player//
         //-----------------------------------------------------------------------//
-        if (other.gameObject.CompareTag("player"))
+        if (other.gameObject.CompareTag("Player"))
         {
 			// Check if there's wall in between using linecast
             RaycastHit hit;
@@ -93,7 +93,7 @@ public class coneOfVision : MonoBehaviour
             Debug.DrawLine(transform.position, other.transform.position, Color.black);
 			if (hit.collider != null)
 			{
-	            if (hit.collider.CompareTag("player"))
+	            if (hit.collider.CompareTag("Player"))
 	            {
 	                chaseTransScript.chaseTrans();
 
@@ -121,16 +121,16 @@ public class coneOfVision : MonoBehaviour
     {
         if (playerSeen)
         {
-            if (other.gameObject.CompareTag ("player"))
+            if (other.gameObject.CompareTag ("Player"))
             {
                 chaseTransScript.outChaseTrans();
 
                 if (Physics.Linecast(transform.parent.position, other.transform.position, out hit))
                 {
-                    if (hit.collider.CompareTag ("player"))//other)
+                    if (hit.collider.CompareTag ("Player"))//other)
                     {
                         chaseTransScript.outChaseTrans();
-                        if (transform.parent.CompareTag ("patrolDog"))
+                        if (transform.parent.CompareTag ("PatrolDog"))
                         {
                             if (script.States != enumStates.chase)
                             {
@@ -138,14 +138,14 @@ public class coneOfVision : MonoBehaviour
                                 script.stateManager(3);
                             }
                         }
-                        else if (transform.parent.CompareTag ("fatDog"))
+                        else if (transform.parent.CompareTag ("FatDog"))
                         {
                             if (scriptFatDog.States != enumStatesFatDog.chase)
                             {
                                 scriptFatDog.stateManager(3);
                             }
                         }
-                        else if (transform.parent.CompareTag ("huntingDog"))
+                        else if (transform.parent.CompareTag ("HuntingDog"))
                         {
                             if (scriptHuntingDog.statesHunter != enumStatesHunter.chase)
                             {

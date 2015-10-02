@@ -5,15 +5,12 @@ using System.Collections;
 public class setMusicVolume : MonoBehaviour {
 
 	float musicVol;
-	
 
 	public AudioMixer bgmMixer;
 
 	// Use this for initialization
 	void Start () {
 	
-
-
 	}
 	
 	// Update is called once per frame

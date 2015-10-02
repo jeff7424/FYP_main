@@ -10,17 +10,13 @@ public interface IHeapItem<T> : IComparable<T>
 		get;
 		set;
 	}
-
-
 }
 
 
 public class heap<T> where T : IHeapItem<T>
-
 {
 	T[] items;
 	int currentItemCount;
-
 
 	public heap(int maxHeapSize)
 
@@ -28,9 +24,7 @@ public class heap<T> where T : IHeapItem<T>
 		items = new T[maxHeapSize];
 	}
 
-
 	public void add(T item)
-
 	{
 		item.heapIndex = currentItemCount;
 		items[currentItemCount] = item;
@@ -40,14 +34,13 @@ public class heap<T> where T : IHeapItem<T>
 	 
 	public T removeFirst()
 	{
-	T firstItem = items[0];
-	currentItemCount--;
-	items[0] = items[currentItemCount];
-	items[0].heapIndex = 0;
-	sortDown(items[0]);
-	return firstItem;
+		T firstItem = items[0];
+		currentItemCount--;
+		items[0] = items[currentItemCount];
+		items[0].heapIndex = 0;
+		sortDown(items[0]);
+		return firstItem;
 	}
-
 
 	public bool contains(T item)
 	{
@@ -86,43 +79,42 @@ public class heap<T> where T : IHeapItem<T>
 
 			parentIndex = (item.heapIndex - 1)/2;
 		}
-		
 	}
 
 	void sortDown(T item)
 	{
-	while(true)
-	{
-		int childIndexLeft = item.heapIndex * 2 + 1;
-		int childIndexRight = item.heapIndex * 2 + 2;
-		int swapIndex = 0;
-
-		if(childIndexLeft < currentItemCount)
+		while(true)
 		{
-			swapIndex = childIndexLeft;
+			int childIndexLeft = item.heapIndex * 2 + 1;
+			int childIndexRight = item.heapIndex * 2 + 2;
+			int swapIndex = 0;
 
-			if(childIndexRight < currentItemCount)
+			if(childIndexLeft < currentItemCount)
 			{
-				if(items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
+				swapIndex = childIndexLeft;
+
+				if(childIndexRight < currentItemCount)
 				{
-					swapIndex = childIndexRight;
+					if(items[childIndexLeft].CompareTo(items[childIndexRight]) < 0)
+					{
+						swapIndex = childIndexRight;
+					}
 				}
-			}
 
-			if(item.CompareTo(items[childIndexLeft]) < 0)
-			{
-				swap(item, items[swapIndex]);
+				if(item.CompareTo(items[childIndexLeft]) < 0)
+				{
+					swap(item, items[swapIndex]);
+				}
+				else
+				{
+					return;
+				}
 			}
 			else
 			{
 				return;
 			}
 		}
-		else
-		{
-			return;
-		}
-	}
 	}
 
 	void swap(T itemA, T itemB)

@@ -6,7 +6,7 @@ public class smelling : MonoBehaviour
 	public ParticleSystem enterPoint;
 	public ParticleSystem exitPoint;
 
-	public BoxCollider colliderCheck;
+	//public BoxCollider colliderCheck;
 
 	public GameObject newBoneComo;
 	public GameObject boneSpawnerComo;
@@ -84,7 +84,7 @@ public class smelling : MonoBehaviour
 	void Start()
 	{
         // If we add this line the game will throw no error but works without so, I don't know. Bisous cordial.
-        colliderCheck = GetComponent<BoxCollider>();
+        //colliderCheck = GetComponent<BoxCollider>();
 
 		enterPoint.GetComponent<ParticleSystem>().enableEmission = false;
 		exitPoint.GetComponent<ParticleSystem>().enableEmission = false;
@@ -95,7 +95,7 @@ public class smelling : MonoBehaviour
 
 	void OnTriggerEnter(Collider boneTrigger)
 	{
-		if (boneTrigger.CompareTag ("bone"))
+		if (boneTrigger.CompareTag ("Bone"))
 		{
 			isEnterBone = true;	
 
@@ -105,8 +105,7 @@ public class smelling : MonoBehaviour
 				StartCoroutine(boneSmell ());
 			}
 		}
-
-		if (boneTrigger.CompareTag ("bagOfAir")) 
+		else if (boneTrigger.CompareTag ("BagOfAir")) 
 		{
 			isEnterBag = true;
 
@@ -120,7 +119,7 @@ public class smelling : MonoBehaviour
 
     void OnTriggerStay(Collider player)
     {
-        if (player.gameObject.CompareTag ("player"))
+        if (player.gameObject.CompareTag ("Player"))
         {
             if (Input.GetKeyDown(KeyCode.Z))
             {

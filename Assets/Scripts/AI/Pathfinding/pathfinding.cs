@@ -29,34 +29,30 @@ public class pathfinding : MonoBehaviour
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccessful = false;
 
-
 		node startNode = mainGrid.nodeFromWorldPoint (startPos);
 		node targetNode = mainGrid.nodeFromWorldPoint (targetPos);
 
-		if (targetNode.walkable) {
-		
-
-
+		if (targetNode.walkable) 
+		{
 			heap<node> openSet = new heap<node> (mainGrid.maxSize);
-				HashSet<node> closedSet = new HashSet<node> ();
-				openSet.add (startNode);
+			HashSet<node> closedSet = new HashSet<node> ();
+			openSet.add (startNode);
+		
+			while (openSet.count > 0) 
+			{
+				node currentNode = openSet.removeFirst ();
+
+				closedSet.Add (currentNode);
 			
-			
-				while (openSet.count > 0) {
-					node currentNode = openSet.removeFirst ();
+				if (currentNode == targetNode) 
+				{
+					sw.Stop ();
 
-				
-					closedSet.Add (currentNode);
-				
-					if (currentNode == targetNode) {
-						sw.Stop ();
+					////print ("path found in: " + sw.ElapsedMilliseconds + " ms");
 
-						////print ("path found in: " + sw.ElapsedMilliseconds + " ms");
-
-						pathSuccessful = true;				
-						break;
-					}
-				
+					pathSuccessful = true;				
+					break;
+				}
 
 				foreach (node neighbour in mainGrid.getNeighbours(currentNode)) {
 
@@ -65,7 +61,6 @@ public class pathfinding : MonoBehaviour
 						}
 					
 						int newMovementCostToNeighbour = currentNode.gCost + getDistance (currentNode, neighbour);
-					
 
 						if (newMovementCostToNeighbour < neighbour.gCost || !openSet.contains (neighbour)) {
 							neighbour.gCost = newMovementCostToNeighbour;
@@ -89,15 +84,13 @@ public class pathfinding : MonoBehaviour
 				waypoints = retracePath (startNode, targetNode);
 			}
 			prm.finishedProcessingPath (waypoints, pathSuccessful);
-		
 	}
 
 	Vector3[] retracePath(node startNode, node endNode)
 	{
 		List<node> path = new List<node> ();
 		node currentNode = endNode;
-
-
+		
 		while (currentNode != startNode) 
 		{
 			path.Add(currentNode);
@@ -107,13 +100,10 @@ public class pathfinding : MonoBehaviour
 		Vector3[] waypoints = simplifyPath (path);
 		Array.Reverse (waypoints);
 		return waypoints;
-
-	
 	}
 
 
 	Vector3[] simplifyPath(List<node> path)
-
 	{
 		List<Vector3> waypoints = new List<Vector3> ();
 		Vector2 directionOld = Vector2.zero;

@@ -61,8 +61,6 @@ public class hidingFirstPerson : MonoBehaviour {
 				//character.transform.position = prevPosition.transform.position;
 
 				isHiding = false;
-
-
 			}
 		}
 	}

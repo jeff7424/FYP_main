@@ -11,8 +11,7 @@ public class soundSphere : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-
-
+		
 	}
 	
 	// Update is called once per frame
@@ -28,7 +27,7 @@ public class soundSphere : MonoBehaviour
         //----------------------------------------------------------------------------//
         // if an enemy enters the sound sphere, this code sends a message to the enemy//
         //----------------------------------------------------------------------------//
-        if (other.gameObject.CompareTag ("enemy") == true) 
+        if (other.gameObject.CompareTag ("Enemy") == true) 
 		{
 			script = other.GetComponent<enemyPathfinding> ();
 			if (script != null) 
@@ -39,9 +38,9 @@ public class soundSphere : MonoBehaviour
 					{
 						if (script.soundSource) 
 						{
-							if (script.soundSource.CompareTag ("enemy") == false || script.soundSource.CompareTag ("fatDog") == false) 
+							if (script.soundSource.CompareTag ("Enemy") == false || script.soundSource.CompareTag ("FatDog") == false) 
 							{
-								if (transform.parent.gameObject.tag == "enemy" || transform.parent.gameObject.tag == "fatDog") 
+								if (transform.parent.gameObject.CompareTag ("Enemy") || transform.parent.gameObject.CompareTag ("FatDog"))
 								{
 									script.stateManager (6);
 									script.soundSource = transform.parent.gameObject;
@@ -51,7 +50,7 @@ public class soundSphere : MonoBehaviour
 						else if (script.soundSource == null) 
 						{
 							Physics.Linecast (transform.parent.position, other.transform.position, out hit);
-							if (transform.parent.gameObject.tag == "enemy" || transform.parent.gameObject.tag == "fatDog" || hit.collider.tag == "enemy" || hit.collider.tag == "fatDog") 
+							if (transform.parent.gameObject.CompareTag ("Enemy") || transform.parent.gameObject.CompareTag("FatDog") || hit.collider.CompareTag ("Enemy") || hit.collider.CompareTag ("FatDog"))
 							{
 								script.stateManager (6);
 								script.soundSource = transform.parent.gameObject;
@@ -65,7 +64,7 @@ public class soundSphere : MonoBehaviour
 				}
 			}
 		}
-		else if (other.gameObject.CompareTag ("fatDog") == true)
+		else if (other.gameObject.CompareTag ("FatDog") == true)
 		{
 	        fatDogAi fatDogScript = other.GetComponent<fatDogAi>();
 	        if (fatDogScript != null)
@@ -76,9 +75,9 @@ public class soundSphere : MonoBehaviour
 	                
 	                    if (fatDogScript.soundSource != null)
 	                    {
-	                        if (fatDogScript.soundSource.CompareTag ("enemy") == false || fatDogScript.soundSource.CompareTag ("fatDog") == false)
+	                        if (fatDogScript.soundSource.CompareTag ("Enemy") == false || fatDogScript.soundSource.CompareTag ("FatDog") == false)
 	                        {
-	                            if (transform.parent.gameObject.CompareTag ("enemy") == true || transform.parent.gameObject.CompareTag ("fatDog") == true)
+	                            if (transform.parent.gameObject.CompareTag ("Enemy") == true || transform.parent.gameObject.CompareTag ("FatDog") == true)
 	                            {
 	                                fatDogScript.stateManager(6);
 	                                fatDogScript.soundSource = transform.parent.gameObject;
@@ -88,7 +87,7 @@ public class soundSphere : MonoBehaviour
 	                    else if (fatDogScript.soundSource == null)
 	                    {
 	                        Physics.Linecast(transform.parent.position, other.transform.position, out hit);
-	                        if (transform.parent.gameObject.CompareTag ("enemy") == true || transform.parent.gameObject.CompareTag ("fatDog") == true || hit.collider.CompareTag ("enemy") == true || hit.collider.CompareTag ("fatDog") == true)
+	                        if (transform.parent.gameObject.CompareTag ("Enemy") == true || transform.parent.gameObject.CompareTag ("FatDog") == true || hit.collider.CompareTag ("Enemy") == true || hit.collider.CompareTag ("FatDog") == true)
 	                        {
 	                            fatDogScript.stateManager(6);
 	                            fatDogScript.soundSource = transform.parent.gameObject;
@@ -105,6 +104,4 @@ public class soundSphere : MonoBehaviour
     {
         maxDiameter = value;
     }
-    
-    
 }

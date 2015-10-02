@@ -5,7 +5,7 @@ public class pickUpItems : MonoBehaviour {
 
 	void OnTriggerEnter (Collider pickUpObject)
 	{
-		if (pickUpObject.tag == "player")
+		if (pickUpObject.CompareTag ("player"))
 		{
  			inventory.inventoryArray[0]++;
 

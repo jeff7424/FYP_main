@@ -24,7 +24,7 @@ public class pickUpCollectables : MonoBehaviour {
 	void OnTriggerEnter (Collider pickUpCollectable)
 	{
 		Debug.Log ("i: " + i);
-		if (pickUpCollectable.tag == "player")
+		if (pickUpCollectable.CompareTag ("Player"))
 		{	
 
 			database.item.Add (new items (collectableName, 0 , items.ItemType.Collectables));

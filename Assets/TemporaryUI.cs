@@ -13,7 +13,7 @@ public class TemporaryUI : MonoBehaviour
 
     void onTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             boneVent.enabled = true;
         }

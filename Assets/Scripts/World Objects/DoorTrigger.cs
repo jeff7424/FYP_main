@@ -23,7 +23,7 @@ public class DoorTrigger : MonoBehaviour
 		// Check if it's not open
 		if (opening == false)
 		{
-	        if (other.gameObject.CompareTag ("player"))
+	        if (other.gameObject.CompareTag ("Player"))
 	        {	
 				inventory.inventoryArray[1]--;
 

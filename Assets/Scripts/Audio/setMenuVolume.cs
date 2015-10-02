@@ -16,7 +16,6 @@ public class setMenuVolume : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-
 		musicVol = PlayerPrefs.GetFloat ("Music Vol");
 
 		menuMusic.SetFloat("Main Menu Master Vol", musicVol);

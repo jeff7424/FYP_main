@@ -109,7 +109,7 @@ public class fatDogAi : MonoBehaviour {
     float x;
     float y;
     public float startingAngle;
-    [Tooltip("Wwhat is the max amount the enemy can look from the starting angle before timer for zeroing starts to tick")]
+    [Tooltip("What is the max amount the enemy can look from the starting angle before timer for zeroing starts to tick")]
     public float facingAngle;
     public float angleDiff;
     Vector3 startingVector;
@@ -118,22 +118,24 @@ public class fatDogAi : MonoBehaviour {
 
 	void Start()
 	{
+		coneOfVisionScript = GetComponentInChildren<coneOfVision>();
+		dogRigidbody = GetComponent<Rigidbody>();
+		agent = GetComponent<NavMeshAgent> ();
+		player = GameObject.FindGameObjectWithTag("Player");
+		ringOfSmellScript = player.GetComponentInChildren<ringOfSmell>();
+
+		raycastRange = GetComponentInChildren<coneOfVision>().startRange; //defaultRaycastRange;
         turnTimerAlert = defaultTurnTimerAlert;
-        raycastRange = GetComponentInChildren<coneOfVision>().range; //defaultRaycastRange;
-        coneOfVisionScript = GetComponentInChildren<coneOfVision>();
-        
 		//respawnPosition = this.transform.position;
-		player = GameObject.FindGameObjectWithTag("player");
-        ringOfSmellScript = player.GetComponentInChildren<ringOfSmell>();
+
 		setDirectionsForIdle();
 		setTargetWaypoints();
  
 		currentTarget = targets[0];
 		lastTarget = currentTarget;
-		agent = GetComponent<NavMeshAgent>();
 		agent.speed = patrolSpeed;
 		agent.SetDestination(currentTarget.position);
-        stateManager((int)enumStatesFatDog.patrol);
+        stateManager((int)enumStatesFatDog.idle);
 		
         //Setting Timers
 		timer = defaultTimer;
@@ -147,7 +149,6 @@ public class fatDogAi : MonoBehaviour {
         y = transform.right.z * 1.0f;
         startingAngle = Mathf.Atan2(x, y) * Mathf.Rad2Deg;
         startingVector = transform.forward * 2.0f;
-		dogRigidbody = GetComponent<Rigidbody>();
         respawnPosition = transform.position;
 	}
 	
@@ -249,7 +250,7 @@ public class fatDogAi : MonoBehaviour {
 	            {                
 	                if (hit.collider != null)
 	                {                    
-	                    if (hit.collider.CompareTag ("player"))
+	                    if (hit.collider.CompareTag ("Player"))
 	                    {                       
 	                        if (coneOfVisionScript.playerSeen == true)
 	                        {
@@ -278,7 +279,7 @@ public class fatDogAi : MonoBehaviour {
 	                            escapeTimer = 0.0f;
 	                            if (currentTarget == player.transform)
 	                            {
-	                             currentTarget = lastTarget;
+	                             	currentTarget = lastTarget;
 	                            }
 	                            escapeTimer = defaultEscapeTimer;                            
 	                            coneOfVisionScript.playerSeen = false;
@@ -479,7 +480,7 @@ public class fatDogAi : MonoBehaviour {
 
 			case enumStatesFatDog.detectSound:
 			{
-                if (soundSource && soundSource.CompareTag ("bone"))
+                if (soundSource && soundSource.CompareTag ("Bone"))
                 {
                     currentTarget = soundSource.transform;
                 }
@@ -511,7 +512,7 @@ public class fatDogAi : MonoBehaviour {
 	                        agentStopped = true;
 	                        agent.Stop();
 	                    }
-	                    if (hit.collider.CompareTag ("bone"))
+	                    if (hit.collider.CompareTag ("Bone"))
 	                    {
 	                        //randomPointSelected = false;
 							stateManager((int)enumStatesFatDog.eatBone);
@@ -526,7 +527,7 @@ public class fatDogAi : MonoBehaviour {
 				// holds the enemy still for long enough for the distraction to pass//
 				//------------------------------------------------------------------//
 
-	            if (soundSource != null && soundSource.CompareTag ("bone"))
+	            if (soundSource != null && soundSource.CompareTag ("Bone"))
 	            {
 	                bone = soundSource;
 	            }
@@ -655,6 +656,7 @@ public class fatDogAi : MonoBehaviour {
     {
         newSphere = (GameObject)Instantiate(sphere, this.transform.position, Quaternion.identity);
         newSphere.transform.parent = transform;
+		newSphere.tag = "SoundSphere";
         barkTimer = defaultBarkTimer;
         if (newSphere)
         {

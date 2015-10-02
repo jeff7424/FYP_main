@@ -25,6 +25,7 @@ public class node : IHeapItem<node>
 		gridY = mainGridY;
 
 	}
+
 	public int fCost
 	{
 		get
@@ -37,7 +38,6 @@ public class node : IHeapItem<node>
 	{
 		get
 		{
-
 			return mainHeapIndex;
 		}
 		set
@@ -47,7 +47,6 @@ public class node : IHeapItem<node>
 	}
 
 	public int CompareTo(node nodeToCompare)
-
 	{
 		int compare = fCost.CompareTo (nodeToCompare.fCost);
 

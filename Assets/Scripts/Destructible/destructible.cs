@@ -9,7 +9,7 @@ public class destructible : MonoBehaviour {
 	
 	void Start()
 	{
-		haz = GameObject.Find ("floorHazard").GetComponent<floorHazards>();
+		haz = GameObject.Find ("FloorHazard").GetComponent<floorHazards>();
 	}
 	void Update()
 	{

@@ -18,7 +18,7 @@ public class ladderClimbing : MonoBehaviour
 		
 	void OnTriggerEnter(Collider player)
 	{
-		if (player.gameObject.CompareTag ("player"))
+		if (player.gameObject.CompareTag ("Player"))
 		{
 			player.GetComponent<TemporaryMovement>().onLadder = true;
 
@@ -40,7 +40,7 @@ public class ladderClimbing : MonoBehaviour
 	void OnTriggerExit(Collider ladder)
 	{
        // ladder.GetComponent<TemporaryMovement>().onLadder = false;
-		if (ladder.gameObject.CompareTag ("player"))
+		if (ladder.gameObject.CompareTag ("Player"))
 		{
 			characterMovement.enabled = true;
 			characterMovement.rb.useGravity = true;

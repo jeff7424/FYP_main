@@ -15,7 +15,7 @@ public class SwordEasterEgg : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             animator.SetBool("isPlaying", true);
         }

@@ -13,7 +13,7 @@ public class smellArea : MonoBehaviour {
 
 	void OnTriggerEnter(Collider enemyCheck)
 	{
-		if (enemyCheck.tag == "player")
+		if (enemyCheck.CompareTag ("Player"))
 		{
 			ringOfSmell.SetActive(false);
 			checkInArea.radius = 10.0f;
@@ -22,7 +22,7 @@ public class smellArea : MonoBehaviour {
 
 	void OnTriggerExit(Collider playerCheck)
 	{
-		if (playerCheck.tag == "player")
+		if (playerCheck.CompareTag ("Player"))
 		{	
 			ringOfSmell.SetActive(true);
 		}

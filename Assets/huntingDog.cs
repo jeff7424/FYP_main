@@ -73,7 +73,7 @@ public class huntingDog : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        player = GameObject.FindGameObjectWithTag("player");
+        player = GameObject.FindGameObjectWithTag("Player");
 		coneOfVisionScript = GetComponentInChildren<coneOfVision> ();
         currentTarget = player.transform;
         agent = GetComponent<NavMeshAgent>();

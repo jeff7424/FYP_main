@@ -25,7 +25,7 @@ public class cameraFOV : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("player"))
+        if (other.CompareTag("Player"))
         {
             if (mainCam.fieldOfView < maxFov - margin) newFov = maxFov;
             else newFov = minFov;

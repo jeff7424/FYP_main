@@ -23,7 +23,7 @@ public class OnScreenInstruction : MonoBehaviour {
 	{
 		if (active == true) 
 		{
-			if (instruction.gameObject.CompareTag ("player")) 
+			if (instruction.gameObject.CompareTag ("Player")) 
 			{
 				instruction1.SetActive (true);
 				chatBox.SetActive (true);
@@ -36,7 +36,7 @@ public class OnScreenInstruction : MonoBehaviour {
 
 	void OnTriggerStay(Collider instruction)
 	{
-		if (instruction.gameObject.CompareTag ("player")) 
+		if (instruction.gameObject.CompareTag ("Player")) 
 		{
 			if (instruction1.activeInHierarchy == false) 
 			{
@@ -47,7 +47,7 @@ public class OnScreenInstruction : MonoBehaviour {
 
 	void OnTriggerExit(Collider instruction)
 	{
-		if (instruction.gameObject.CompareTag ("player"))
+		if (instruction.gameObject.CompareTag ("Player"))
 		{
 			StartCoroutine(FadeOut());
 

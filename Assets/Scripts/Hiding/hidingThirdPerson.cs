@@ -35,7 +35,7 @@ public class hidingThirdPerson : MonoBehaviour {
 
     void OnTriggerStay(Collider catType)
     {	
-		if (catType.CompareTag ("player"))
+		if (catType.CompareTag ("Player"))
 		{	
 			isEntered = true;
 			//keyboardCheckToEnter.SetActive(true);
@@ -63,7 +63,7 @@ public class hidingThirdPerson : MonoBehaviour {
 
 	void OnTriggerExit(Collider cat)
 	{	
-		if (cat.CompareTag ("player")) 
+		if (cat.CompareTag ("Player")) 
 		{
 			isEntered = false;
 		}
@@ -112,7 +112,7 @@ public class hidingThirdPerson : MonoBehaviour {
 		showHiding.SetActive(true);
 		character.transform.position = hidingPosition.transform.position;
 		characterCamera.SetHidingPosition(cameraPosition.position);
-		Debug.Log (cameraPosition.eulerAngles.y);
+
 		characterCamera.SetHidingRotation (cameraPosition.eulerAngles.y);
 		characterCamera.transform.localRotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
 		playerScript.playerHidden = true;

@@ -7,7 +7,7 @@ public class SecretRoom : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             foreach (Renderer prop in props)
             {

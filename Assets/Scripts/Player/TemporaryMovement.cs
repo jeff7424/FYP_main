@@ -108,7 +108,7 @@ public class TemporaryMovement : MonoBehaviour
         origMovementSpeed = movementSpeed;
         sprintSpeed = movementSpeed * sprintModifier;
         ring = GetComponentInChildren<ringOfSmell>();
-
+		boneSpawner = GameObject.FindGameObjectWithTag("BoneSpawner");
         durationOfSpriteAnimationBone = spriteAnimationBone.length;
         durationOfSpriteAnimationBag = spriteAnimationBag.length;
         isEsc = !isEsc;
@@ -126,7 +126,7 @@ public class TemporaryMovement : MonoBehaviour
         bags = inventory.inventoryArray[0];
         sprint();
         updateAnimator();
-        boneSpawner = GameObject.FindGameObjectWithTag("boneSpawner");
+        
         checkGroundStatus();
 
 		if (playerHidden == false) 
@@ -189,7 +189,7 @@ public class TemporaryMovement : MonoBehaviour
                 Debug.DrawRay(transform.position, direction * 1.3f, Color.blue, 2.0f);
                 if (hit.collider != null)
                 {
-                    if (hit.collider.CompareTag ("wall"))
+                    if (hit.collider.CompareTag ("Wall"))
                     {
                         Vector3 vectorBetweenWallPlayer = hit.point - this.transform.position;
                         float distanceWallPlayer = vectorBetweenWallPlayer.magnitude;
@@ -375,13 +375,13 @@ public class TemporaryMovement : MonoBehaviour
     {
         if (other.transform.parent != null)
         {
-            if ((Input.GetKeyDown(KeyCode.Return) && other.transform.parent.CompareTag ("ball") || other.transform.parent.CompareTag ("cube")))
+            if ((Input.GetKeyDown(KeyCode.Return) && other.transform.parent.CompareTag ("Ball") || other.transform.parent.CompareTag ("Cube")))
             {
                 other.transform.parent.GetComponent<Rigidbody>().AddForce(Vector3.forward * throwForce, ForceMode.Force);
                 other.transform.GetComponentInParent<breakableObject>().ObjectFalling();
             }
 
-            if (other.transform.parent.CompareTag ("trap"))
+            if (other.transform.parent.CompareTag ("Trap"))
             {
 
             }
@@ -390,7 +390,7 @@ public class TemporaryMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.collider.CompareTag ("trap"))
+        if (col.collider.CompareTag ("Trap"))
         {
             breakableObject trap = col.collider.transform.GetComponent<breakableObject>();
             trap.makeSound = true;
@@ -400,7 +400,7 @@ public class TemporaryMovement : MonoBehaviour
     
     void OnTriggerEnter(Collider coll)
     {
-        if (coll.gameObject.CompareTag ("ladder"))
+        if (coll.gameObject.CompareTag ("Ladder"))
         {
             if (Vector3.Distance(this.transform.position, coll.transform.position) < 1.5f)
             {
@@ -412,7 +412,7 @@ public class TemporaryMovement : MonoBehaviour
 
     void OnTriggerExit(Collider coll)
     {
-        if (coll.gameObject.CompareTag ("ladder"))
+        if (coll.gameObject.CompareTag ("Ladder"))
         {
             onLadder = false;
             catAnim.SetBool("isClimbing", false);
@@ -425,8 +425,8 @@ public class TemporaryMovement : MonoBehaviour
         GameObject[] patrolEnemy;
         GameObject[] hunterEnemy;
         enemies.Clear();
-        patrolEnemy = GameObject.FindGameObjectsWithTag("enemy");
-        hunterEnemy = GameObject.FindGameObjectsWithTag("huntingDog");
+        patrolEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+        hunterEnemy = GameObject.FindGameObjectsWithTag("HuntingDog");
 
         foreach (GameObject enemy in patrolEnemy)
         {

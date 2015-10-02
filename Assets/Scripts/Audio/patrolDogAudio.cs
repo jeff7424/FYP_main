@@ -6,13 +6,11 @@ public class patrolDogAudio : MonoBehaviour {
 
 	public AudioSource patrolBarkSource;
 	public AudioSource patrolWalkSource;
-
-
+	
 	// Use this for initialization
 	void Start () {
 
 		//patrolBarkSource = GetComponents<AudioSource>;
-	
 	}
 
 	void playBark()

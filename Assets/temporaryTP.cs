@@ -7,7 +7,7 @@ public class temporaryTP : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
+        if (other.gameObject.CompareTag ("Player"))
         {
             other.transform.position = tp.transform.position;
         }

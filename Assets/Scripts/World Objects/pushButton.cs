@@ -42,7 +42,7 @@ public class pushButton : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag ("player") || other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("fatDog"))
+        if (other.gameObject.CompareTag ("Player") || other.gameObject.CompareTag ("Enemy") || other.gameObject.CompareTag ("FatDog"))
         {
             buttonActivated = true;
         }
@@ -50,7 +50,7 @@ public class pushButton : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-		if (other.gameObject.CompareTag ("player") || other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("fatDog"))
+		if (other.gameObject.CompareTag ("Player") || other.gameObject.CompareTag ("Enemy") || other.gameObject.CompareTag ("FatDog"))
         {
             timer = defaultTimer;
             GetComponentInParent<Animator>().SetBool("isDown", false); 

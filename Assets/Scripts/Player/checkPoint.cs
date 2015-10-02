@@ -52,7 +52,7 @@ public class checkPoint: MonoBehaviour
 	void OnTriggerEnter(Collider other) // turns the check point on
     {
 		// If gameobject tag is checkpoint
-		if (other.gameObject.CompareTag ("checkPoint")) 
+		if (other.gameObject.CompareTag ("Checkpoint")) 
 		{
 			// Increase the checkpointNumber to get which checkpoint has the player pass through
 			checkpointNumber++;
@@ -64,16 +64,16 @@ public class checkPoint: MonoBehaviour
 
     void OnCollisionEnter(Collision other) // On collision with an enemy
     {
-        if ((other.gameObject.CompareTag ("enemy") || other.gameObject.CompareTag ("huntingDog") || other.gameObject.CompareTag ("fatDog")) )
+        if ((other.gameObject.CompareTag ("Enemy") || other.gameObject.CompareTag ("HuntingDog") || other.gameObject.CompareTag ("FatDog")) )
         {
 			// Stop the enemy when collided
-            if (other.gameObject.CompareTag ("enemy"))
+            if (other.gameObject.CompareTag ("Enemy"))
             {
                 other.gameObject.GetComponent<enemyPathfinding>().agent.velocity = Vector3.zero;
                 other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 other.gameObject.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
-            else if (other.gameObject.CompareTag ("fatDog"))
+            else if (other.gameObject.CompareTag ("FatDog"))
             {
                 other.gameObject.GetComponent<fatDogAi>().agent.velocity = Vector3.zero;
                 other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -92,14 +92,14 @@ public class checkPoint: MonoBehaviour
         sendBack = true;
 
 		// Get all the objects from the scene using tag (Might have performance impact, if have time find a better solution)
-        allEnemies = GameObject.FindGameObjectsWithTag("enemy");
-        allHunters = GameObject.FindGameObjectsWithTag("huntingDog");
-        allKeys = GameObject.FindGameObjectsWithTag("key");
-        allDoors = GameObject.FindGameObjectsWithTag("door");
-        allDestructibles = GameObject.FindGameObjectsWithTag("destructible");
-        allBones = GameObject.FindGameObjectsWithTag("bone");
-        allFatDogs = GameObject.FindGameObjectsWithTag("fatDog");
-        allSpheres = GameObject.FindGameObjectsWithTag("soundSphere");
+        allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        allHunters = GameObject.FindGameObjectsWithTag("HuntingDog");
+        allKeys = GameObject.FindGameObjectsWithTag("Key");
+        allDoors = GameObject.FindGameObjectsWithTag("Door");
+        allDestructibles = GameObject.FindGameObjectsWithTag("Destructible");
+        allBones = GameObject.FindGameObjectsWithTag("Bone");
+        allFatDogs = GameObject.FindGameObjectsWithTag("FatDog");
+        allSpheres = GameObject.FindGameObjectsWithTag("SoundSphere");
 		allClosets = GameObject.FindGameObjectsWithTag ("Closet");
 		//resets BGM.
 		chaseTransScript.resetChaseTrans(); 

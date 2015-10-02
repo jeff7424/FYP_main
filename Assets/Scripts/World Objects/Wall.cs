@@ -65,12 +65,11 @@ public class Wall : MonoBehaviour {
 	{
 		//Get all the renderers
 
-        if (transform.parent.tag == "Folder")
+        if (transform.parent.CompareTag ("Folder"))
         {
             m_RenderersChildren = transform.GetComponentsInChildren<Renderer>();
         }
-
-        else if(transform.parent.tag == "subFolder")
+        else if(transform.parent.CompareTag ("SubFolder"))
         {
             m_RenderersChildren = transform.parent.GetComponentsInChildren<Renderer>();
         }
@@ -79,14 +78,12 @@ public class Wall : MonoBehaviour {
         //    m_RenderersChildren = transform.GetComponentsInChildren<Renderer>();
         //}
 
-        
         //Get all the renderers
         m_Renderers = GetComponents<Renderer>();
 
         //Update length of the array to match with the number of renderer
         m_InitialMaterial = new Material[m_Renderers.Length];
         transparentMaterial = new Material[m_Renderers.Length];
-
 
         for (int j = 0; j < m_Renderers.Length; j++)
         {
@@ -114,7 +111,6 @@ public class Wall : MonoBehaviour {
 
             transparentMaterialChildren = new Material[m_RenderersChildren.Length];
             //transparentMaterialParent = new Material[m_RenderersParent.Length];
-
 
             for (int i = 0; i < m_RenderersChildren.Length; i++)
             {
@@ -153,14 +149,16 @@ public class Wall : MonoBehaviour {
 	
 	public void SetTransparent()
 	{
-        if (m_RenderersChildren != null)
-            for (int i = 0; i < m_RenderersChildren.Length; i++)
-            {
-                m_RenderersChildren[i].material = transparentMaterialChildren[i];
-            }
+        if (m_RenderersChildren != null) 
+		{
+			for (int i = 0; i < m_RenderersChildren.Length; i++) 
+			{
+				m_RenderersChildren[i].material = transparentMaterialChildren [i];
+			}
+		}
         if(m_Renderers != null)
         {
-            for(int j = 0; j<m_Renderers.Length; j++)
+            for(int j = 0; j < m_Renderers.Length; j++)
             {
                 m_Renderers[j].material = transparentMaterial[j];
             }
@@ -175,16 +173,20 @@ public class Wall : MonoBehaviour {
 	
 	public void SetToNormal()
 	{
-		if (m_RenderersChildren != null)
-		for (int i = 0; i <m_RenderersChildren.Length; i++){
-			m_RenderersChildren[i].material = m_InitialMaterialChildren[i];
+		if (m_RenderersChildren != null) 
+		{
+			for (int i = 0; i <m_RenderersChildren.Length; i++) 
+			{
+				m_RenderersChildren [i].material = m_InitialMaterialChildren [i];
+			}
 		}
-        if (m_Renderers != null)
-            for (int j = 0; j < m_Renderers.Length; j++)
-            {
-                m_Renderers[j].material = m_InitialMaterial[j];
-            }
-
+        if (m_Renderers != null) 
+		{
+			for (int j = 0; j < m_Renderers.Length; j++) 
+			{
+				m_Renderers [j].material = m_InitialMaterial [j];
+			}
+		}
         //if (m_RenderersParent != null)
         //for (int j = 0; j <m_RenderersParent.Length; j++){
         //    m_RenderersParent[j].material = m_InitialMaterialParent[j];
