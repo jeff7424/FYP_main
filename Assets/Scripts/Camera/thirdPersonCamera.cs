@@ -82,8 +82,8 @@ public class thirdPersonCamera : MonoBehaviour {
 				isHiding = characterMovement.playerHidden;
 				if (isHiding == false) 
 				{
-					angleX = 0.0f;
-					angleY = 0.0f;
+//					angleX = 0.0f;
+//					angleY = 0.0f;
 					transform.position = initialPosition;
 				} 
 				else 
@@ -106,14 +106,15 @@ public class thirdPersonCamera : MonoBehaviour {
 			}
 
 			// Reset the angle X if it reaches 360, else add the value of mouse movement into angle X
-			if (angleX < 360.0f) 
-			{
-				angleX += horizontalAngle;
-			} 
-			else 
-			{
-				angleX -= 360.0f;
-			}
+//			if (angleX < 360.0f) 
+//			{
+//				angleX += horizontalAngle;
+//			} 
+//			else 
+//			{
+//				angleX -= 360.0f;
+//			}
+			angleX += horizontalAngle;
 
 			// Check if inverse mouse is enabled
 			if (inverseYMouse == false) 
@@ -208,5 +209,6 @@ public class thirdPersonCamera : MonoBehaviour {
 	public void ResetHidingRotation()
 	{
 		rotation = Quaternion.identity;
+		angleX = transform.eulerAngles.y;
 	}
 }

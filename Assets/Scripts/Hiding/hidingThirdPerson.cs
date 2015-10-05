@@ -114,7 +114,7 @@ public class hidingThirdPerson : MonoBehaviour {
 		characterCamera.SetHidingPosition(cameraPosition.position);
 
 		characterCamera.SetHidingRotation (cameraPosition.eulerAngles.y);
-		characterCamera.transform.localRotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
+		//characterCamera.transform.localRotation = Quaternion.Euler(0, transform.parent.eulerAngles.y, 0);
 		playerScript.playerHidden = true;
 		//keyboardCheckToEnter.SetActive(false);
 		//keyboardCheckToExit.SetActive(true);

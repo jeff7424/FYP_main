@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: d88d27f2a2ecab841ad910b895ea1b32
-timeCreated: 1435714030
+guid: fed80c7cf98ad7641b018c613d773869
+timeCreated: 1444018322
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -37,6 +37,16 @@ ModelImporter:
     100058: transform27
     100060: transform28
     100062: transform29
+    100064: Bottle_Single
+    100066: Broken
+    100068: BrokenPieces17
+    100070: BrokenPieces18
+    100072: BrokenPieces19
+    100074: BrokenPieces20
+    100076: BrokenPieces21
+    100078: BrokenPieces22
+    100080: BrokenPieces23
+    100082: BrokenPieces24
     400000: //RootNode
     400002: pCylinder15
     400004: polySurface17
@@ -69,16 +79,50 @@ ModelImporter:
     400058: transform27
     400060: transform28
     400062: transform29
-    2300000: //RootNode
-    2300002: polySurface25
-    3300000: //RootNode
-    3300002: polySurface25
-    4300000: pCylinder15
-    4300002: polySurface25
+    400064: Bottle_Single
+    400066: Broken
+    400068: BrokenPieces17
+    400070: BrokenPieces18
+    400072: BrokenPieces19
+    400074: BrokenPieces20
+    400076: BrokenPieces21
+    400078: BrokenPieces22
+    400080: BrokenPieces23
+    400082: BrokenPieces24
+    2300000: polySurface25
+    2300002: Bottle_Single
+    2300004: BrokenPieces17
+    2300006: BrokenPieces18
+    2300008: BrokenPieces19
+    2300010: BrokenPieces20
+    2300012: BrokenPieces21
+    2300014: BrokenPieces22
+    2300016: BrokenPieces23
+    2300018: BrokenPieces24
+    3300000: polySurface25
+    3300002: Bottle_Single
+    3300004: BrokenPieces17
+    3300006: BrokenPieces18
+    3300008: BrokenPieces19
+    3300010: BrokenPieces20
+    3300012: BrokenPieces21
+    3300014: BrokenPieces22
+    3300016: BrokenPieces23
+    3300018: BrokenPieces24
+    4300000: polySurface25
+    4300002: Bottle_Single
+    4300004: BrokenPieces24
+    4300006: BrokenPieces18
+    4300008: BrokenPieces23
+    4300010: BrokenPieces22
+    4300012: BrokenPieces21
+    4300014: BrokenPieces19
+    4300016: BrokenPieces20
+    4300018: BrokenPieces17
     7400000: Take 001
     9500000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
@@ -96,12 +140,12 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 4
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0

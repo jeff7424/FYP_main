@@ -16,11 +16,9 @@ public class destructible : MonoBehaviour {
 		
 	}
 	
-	void OnTriggerEnter(Collider Destructible) {
-		
-		
+	void OnTriggerEnter(Collider Destructible) 
+	{
 		destroyMe ();
-		
 	}
 	
 	void destroyMe()
