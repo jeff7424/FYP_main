@@ -17,6 +17,8 @@ public class FishBucket : MonoBehaviour {
 	{
 		if(coll.gameObject.tag == "Player")
 		{
+			coll.GetComponent<TemporaryMovement>().numberOfFishes++;
+
 			Destroy(this.gameObject);
 		}
 	}
