@@ -15,8 +15,7 @@ public class FishBucket : MonoBehaviour {
       
 	void OnTriggerEnter(Collider coll)
 	{
-		//if(coll.gameObject.tag == "Player")
-		if(coll.gameObject.CompareTag("Player"))
+		if(coll.gameObject.tag == "Player")
 		{
 			Destroy(this.gameObject);
 		}
