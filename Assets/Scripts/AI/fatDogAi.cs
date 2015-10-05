@@ -196,13 +196,13 @@ public class fatDogAi : MonoBehaviour {
 	                newTargetTimer -= Time.deltaTime;
 	            }
 
-	                if (vectorx >= waypointOffsetMin && vectorx <= waypointOffsetMax && vectorz >= waypointOffsetMin && vectorz <= waypointOffsetMax)
-	                {
-	                    agent.Stop();
-	                    agentStopped = true;
-	                    stateManager((int)enumStatesFatDog.idle);
-	                    onWaypoint = true;
-	                }
+                if (vectorx >= waypointOffsetMin && vectorx <= waypointOffsetMax && vectorz >= waypointOffsetMin && vectorz <= waypointOffsetMax)
+                {
+                    agent.Stop();
+                    agentStopped = true;
+                    stateManager((int)enumStatesFatDog.idle);
+                    onWaypoint = true;
+                }
 			}
 			break;
 				
@@ -585,9 +585,9 @@ public class fatDogAi : MonoBehaviour {
         }
         
 		// 
-		if(timer <= 0)
+		if(timer <= 0.0f)
 		{
-			timer+=defaultTimer;
+			timer += defaultTimer;
 
             if (States != enumStatesFatDog.idleSuspicious && States != enumStatesFatDog.chase)
 			{
@@ -596,7 +596,7 @@ public class fatDogAi : MonoBehaviour {
                     //agent.Stop();
 					agent.SetDestination(currentTarget.position);
                     agent.Resume();
-                    if (newTargetTimer <= 0 && onWaypoint == true)
+                    if (newTargetTimer <= 0.0f && onWaypoint == true)
                     {
                         newTargetTimer = defaultNewTargetTimer;
                         onWaypoint = false;

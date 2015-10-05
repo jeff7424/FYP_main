@@ -8,18 +8,22 @@ public class soundSphere : MonoBehaviour
     Vector3 scalingRate = new Vector3(1.0f, 0.125f, 1.0f);
     public float maxDiameter;
     RaycastHit hit;
+	Vector3 startingScale;
 	// Use this for initialization
 	void Start () 
     {
-		
+		startingScale = transform.localScale;
+		gameObject.SetActive (false);
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-        this.transform.localScale += scalingRate;
-        if (this.transform.localScale.x >= maxDiameter)
-            Destroy(this.gameObject);
+		this.transform.localScale += scalingRate;
+		if (this.transform.localScale.x >= maxDiameter) {
+			gameObject.SetActive (false);
+			gameObject.transform.localScale = startingScale;
+		}
 	}
 
     void OnTriggerEnter(Collider other)

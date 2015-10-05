@@ -7,15 +7,14 @@ public class instantiateDestructible : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
-        newDestructible = (GameObject)Instantiate(destructible, transform.localPosition, Quaternion.identity);
+        newDestructible = (GameObject)Instantiate(destructible, this.transform.localPosition, Quaternion.identity);
         newDestructible.transform.parent = transform;
 	}
 
     public void checkpoint()
     {
         Destroy(newDestructible);
-            newDestructible = (GameObject)Instantiate(destructible, transform.localPosition, Quaternion.identity);
-            newDestructible.transform.parent = transform;
-        
+		newDestructible = (GameObject)Instantiate(destructible, this.transform.localPosition, Quaternion.identity);
+        newDestructible.transform.parent = transform;
     }
 }
