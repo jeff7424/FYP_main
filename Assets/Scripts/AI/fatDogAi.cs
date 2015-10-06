@@ -150,6 +150,10 @@ public class fatDogAi : MonoBehaviour {
         startingAngle = Mathf.Atan2(x, y) * Mathf.Rad2Deg;
         startingVector = transform.forward * 2.0f;
         respawnPosition = transform.position;
+
+		newSphere = (GameObject)Instantiate(sphere, this.transform.position, Quaternion.identity);
+		newSphere.transform.parent = transform;
+		newSphere.SetActive (false);
 	}
 	
 	void Update()
@@ -336,7 +340,7 @@ public class fatDogAi : MonoBehaviour {
 
                     alertLookingDirectionsSet = true;
 
-                    if (directionDegreesAlert[0] != null)
+                    if (directionDegreesAlert.Count > 0)
                     {
                         for (int i = 0; i <= directionDegreesAlert.Count; i++)
                         {
@@ -654,7 +658,14 @@ public class fatDogAi : MonoBehaviour {
 
     void bark()
     {
-        newSphere = (GameObject)Instantiate(sphere, this.transform.position, Quaternion.identity);
+		if (newSphere != null) 
+		{
+			newSphere.SetActive (true);
+		} 
+		else 
+		{
+			newSphere = (GameObject)Instantiate (sphere, this.transform.position, Quaternion.identity);
+		}
         newSphere.transform.parent = transform;
 		newSphere.tag = "SoundSphere";
         barkTimer = defaultBarkTimer;

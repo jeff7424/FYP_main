@@ -21,6 +21,7 @@ public class breakableObject: MonoBehaviour
 	public TemporaryMovement playerMovement;
 
 	private bool isGrounded;
+	private bool broken;
 	private float m_GroundCheckDistance;
 	private GameObject newSphere;
 	private GameObject brokenObject;
@@ -37,11 +38,7 @@ public class breakableObject: MonoBehaviour
         if (this.gameObject.CompareTag ("Bottle")) 
 		{
 			maxScale = 15.0f;
-			if (originalObject != null && brokenPieces != null)
-			{
-				originalObject.SetActive(true);
-				brokenPieces.SetActive (false);
-			}
+			expireTimer = 1.0f;
 		} 
 		else if (this.gameObject.CompareTag ("Glass")) 
 		{
@@ -58,7 +55,16 @@ public class breakableObject: MonoBehaviour
 
 		SFX = GameObject.Find ("SFX").GetComponent<sfxPlayer> ();
 
+		broken = false;
+
         m_GroundCheckDistance = 0.6f;
+
+		if (originalObject != null && brokenPieces != null)
+		{
+			originalObject.SetActive(true);
+			brokenPieces.SetActive (false);
+		}
+
         if (GetComponent<Rigidbody>() != null)
         {
             rb = GetComponent<Rigidbody>();
@@ -98,27 +104,42 @@ public class breakableObject: MonoBehaviour
 //			}
 //			timer -= Time.deltaTime;
 //		}
-		if (gameObject.CompareTag ("Bone") || gameObject.CompareTag ("BagOfAir")) {
-			if (timer <= 0.0f) {
+		if (gameObject.CompareTag ("Bone") || gameObject.CompareTag ("BagOfAir")) 
+		{
+			if (timer <= 0.0f) 
+			{
 				makeSound = false;
 				timer += defaultTimer;
-				if (newSphere == null) {
+				if (newSphere == null) 
+				{
 					newSphere = (GameObject)Instantiate (Sphere, this.transform.localPosition, Quaternion.identity);
-				} else {
+				} 
+				else 
+				{
 					newSphere.SetActive (true);
 				}
 				newSphere.transform.parent = transform;
-				if (gameObject.CompareTag ("Bone")) {
+				if (gameObject.CompareTag ("Bone")) 
+				{
 					newSphere.tag = "Bone";
-				} else if (gameObject.CompareTag ("Bottle")) {
+				} 
+				else if (gameObject.CompareTag ("Bottle")) 
+				{
 					newSphere.tag = "Bottle";
 				}
 				sphereScript = newSphere.GetComponent<soundSphere> ();
 				sphereScript.setMaxDiameter (boneRadius);
-				expireTimer--;
 			}
+			expireTimer -= Time.deltaTime;
 			timer -= Time.deltaTime;
 		} 
+		else 
+		{
+			if (broken == true)
+			{
+				expireTimer -= Time.deltaTime;
+			}
+		}
 	}
 
     void LateUpdate()
@@ -175,8 +196,14 @@ public class breakableObject: MonoBehaviour
 //        }
 		if (Other.gameObject.CompareTag ("Player")) {
 			//rb.AddRelativeForce (playerMovement.transform.forward * playerMovement.movementSpeed, ForceMode.Force);
-			rb.AddForce (playerMovement.transform.right * playerMovement.movementSpeed * playerMovement.magnMultiplier);
+			if (brokenPieces.activeInHierarchy) {
+				Physics.IgnoreCollision (Other.collider, originalObject.GetComponent<Collider> ());
+			} else {
+				rb.AddForce (playerMovement.transform.right * playerMovement.movementSpeed * playerMovement.magnMultiplier);
+			}
 			//makeSound = true;
+		} else if (Other.gameObject.CompareTag ("Enemy")) {
+			Physics.IgnoreCollision (Other.collider, originalObject.GetComponent<Collider>());
 		}
 		else if (Other.gameObject.CompareTag ("Floor"))
 		{
@@ -188,8 +215,8 @@ public class breakableObject: MonoBehaviour
 					brokenPieces.transform.position = originalObject.transform.position;
 					originalObject.GetComponent<Renderer>().enabled = false;
 					originalObject.GetComponent<Rigidbody>().Sleep ();
-					originalObject.GetComponent<CapsuleCollider>().enabled = false;
 					brokenPieces.SetActive (true);
+					broken = true;
 				}
 			}
 		}
@@ -207,11 +234,15 @@ public class breakableObject: MonoBehaviour
 
     public void destroySelf()
     {
-        if(gameObject.CompareTag ("Bone"))
-        {
-			playerMovement.reduceBonePlacedNumber();
-        }
-        Destroy(gameObject);
+        if (gameObject.CompareTag ("Bone")) 
+		{
+			playerMovement.reduceBonePlacedNumber ();
+			Destroy (gameObject);
+		} 
+		else 
+		{
+			gameObject.SetActive(false);
+		}
     }
 
     public void objectBreaking()
@@ -232,6 +263,7 @@ public class breakableObject: MonoBehaviour
 				newSphere = (GameObject)Instantiate(Sphere, this.transform.position, Quaternion.identity);
 			}
 			newSphere.transform.position = brokenPieces.transform.position;
+			newSphere.transform.Rotate (Vector3.zero);
             sphereScript = newSphere.GetComponent<soundSphere>();
             sphereScript.setMaxDiameter(maxScale);
             //destroySelf();

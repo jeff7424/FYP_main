@@ -8,12 +8,12 @@ public class pickUpCollectables : MonoBehaviour {
 	public itemDatabase database;
 	public inventory inv;
 	private static int i;
-	private static int j;
+	//private static int j;
 
 	void Awake()
 	{
 		i = 0;
-		j = 0;
+		//j = 0;
 
 		collectableName = gameObject.name;
 		inv = GameObject.Find ("Char_Cat").GetComponent<inventory>();

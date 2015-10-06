@@ -15,9 +15,9 @@ public class DisplayInstruction : MonoBehaviour
 	public RuntimeAnimatorController keyboard1;
 	public RuntimeAnimatorController controller1;
 
-	private float maximum = 1.0f;
-	private float minimum = 0.0f;
-	private float duration = 5.0f;
+//	private float maximum = 1.0f;
+//	private float minimum = 0.0f;
+//	private float duration = 5.0f;
 	private float startTime;
 
 	void Start () 

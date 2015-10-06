@@ -544,7 +544,7 @@ public class enemyPathfinding : MonoBehaviour
 	                agentStopped = false;
 	                agent.Resume();
 	            }
-	            if (alertTimer == 0 || alertTimer < 0)
+	            if (alertTimer <= 0.0f)
 	            {
 	                if (lastTarget != null)
 	                {
@@ -557,7 +557,7 @@ public class enemyPathfinding : MonoBehaviour
 	            {
 	                if (timer <= 0 && (!distracted))
 	                {
-	                    if (currentTarget != null && currentTarget.gameObject.CompareTag ("Bone") == false)
+	                    if (currentTarget != null && currentTarget.gameObject.CompareTag ("Bone") == false || currentTarget.gameObject.CompareTag ("Bottle") == false)
 	                    {
 	                        lastTarget = currentTarget;
 	                    }
@@ -719,7 +719,7 @@ public class enemyPathfinding : MonoBehaviour
             {
 				if (soundSource != null) 
 				{
-                    if (soundSource.CompareTag ("Bone"))
+                    if (soundSource.CompareTag ("Bone") || soundSource.CompareTag ("Bottle"))
                     {                        
                         if (isPatrolling)
                         {
@@ -733,7 +733,7 @@ public class enemyPathfinding : MonoBehaviour
 
                             patrolAnim.SetBool("patrolRun", false);
 
-                            if (soundSource && soundSource.CompareTag ("Bone") == false && randomPointSelected == false)
+                            if (soundSource.CompareTag ("Bone") == false || soundSource.CompareTag ("Bottle") == false && randomPointSelected == false)
                             {
                                 if (RandomPoint(soundSource.transform.position, maxRange, out soundSourcePos))
                                 {
@@ -743,7 +743,7 @@ public class enemyPathfinding : MonoBehaviour
                                     currentTarget = tempWaypointPos;//soundSourcePos;
                                 }
                             }
-                            else if (soundSource && soundSource.CompareTag ("Bone"))
+                            else if (soundSource.CompareTag ("Bone") || soundSource.CompareTag ("Bottle"))
                             {
                                 currentTarget = soundSource.transform;
                             }
@@ -775,11 +775,13 @@ public class enemyPathfinding : MonoBehaviour
                                     if (soundSource.CompareTag ("Bone"))//(hit.collider.tag == "bone")
                                     {
                                         randomPointSelected = false;
+										soundSource = null;
 										stateManager((int)enumStates.eatBone);
                                     }
                                     else
                                     {
                                         randomPointSelected = false;
+										soundSource = null;
 										stateManager((int)enumStates.alert);
                                     }
                                 }
@@ -813,7 +815,7 @@ public class enemyPathfinding : MonoBehaviour
                      //   }
                     }
 				}
-				else
+				else if (soundSource == null || soundSource.activeInHierarchy == false)
 				{
 					stateManager ((int)enumStates.idle);
 				}

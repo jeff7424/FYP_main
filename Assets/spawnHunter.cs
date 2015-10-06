@@ -3,8 +3,8 @@ using System.Collections;
 
 public class spawnHunter : MonoBehaviour {
     public GameObject huntingDog;
-    public int spawnedHunters;
-    public bool spawnhunter;
+    //public int spawnedHunters;
+	public bool spawnedHunter;
     public Transform spawnLocation;
 	public GameObject alertArea;
 	private GameObject newDog;
@@ -16,6 +16,7 @@ public class spawnHunter : MonoBehaviour {
         {
             spawnLocation = this.transform;
         }
+		spawnedHunter = false;
 		doorAnimator = GetComponentInParent<Animator> ();
 	}
 
@@ -25,7 +26,7 @@ public class spawnHunter : MonoBehaviour {
         {
             if (other.transform.parent.CompareTag ("Bone") == false)
             {
-                if (spawnedHunters < 1)
+				if (!spawnedHunter)
                 {
                     newDog = (GameObject)Instantiate(huntingDog, spawnLocation.transform.position, Quaternion.identity);
 					if (alertArea != null)
@@ -33,7 +34,7 @@ public class spawnHunter : MonoBehaviour {
 						newDog.GetComponent<huntingDog>().setAlertArea(alertArea);
 					}
                     newDog.transform.parent = transform;
-                    spawnedHunters++;
+					spawnedHunter = true;
 					doorAnimator.SetBool("DoorOpen", true);
                 }
             }

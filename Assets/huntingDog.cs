@@ -306,7 +306,7 @@ public class huntingDog : MonoBehaviour {
 
             if (statesHunter != enumStatesHunter.idleSuspicious)
             {
-                if (agent.SetDestination(currentTarget.position) != null)
+                if (agent.destination != null)
                 {
                     agent.SetDestination(currentTarget.position);
                 }
@@ -529,7 +529,7 @@ public class huntingDog : MonoBehaviour {
     {
         if (hunterSpawnScript) 
 		{
-			hunterSpawnScript.spawnedHunters--;
+			hunterSpawnScript.spawnedHunter = false;
 			hunterSpawnScript.CloseDoor();
 		}
         Destroy(this.gameObject);
