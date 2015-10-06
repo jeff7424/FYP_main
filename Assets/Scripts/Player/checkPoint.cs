@@ -141,10 +141,22 @@ public class checkPoint: MonoBehaviour
 			}
 		}
 
+		for (i = 0; i < allBottles.Length; i++)
+		{
+			if (allBottles[i].GetComponent<breakableObject>().brokenPieces == null)
+			{
+				Debug.Log (allBottles[i]);
+			}
+		}
+
 		if (allBottles.Length > 0) 
 		{
 			for (i = 0; i < allBottles.Length; i++)
 			{
+				if (allBottles[i].GetComponent<breakableObject>() == null)
+				{
+					Debug.Log (allBottles[i]);
+				}
 				bo = allBottles[i].GetComponent<breakableObject>();
 				bo.brokenPieces.SetActive(false);
 				bo.originalObject.SetActive(true);

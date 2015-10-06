@@ -64,6 +64,7 @@ public class TemporaryMovement : MonoBehaviour
 	public int numberOfKeys;
 	
 	public int numberOfFishes;
+	public int numberOfRescue;
 	
 	public int[] keyPossessed = new int[4];
 	private float joystickPressure;
@@ -493,6 +494,7 @@ public class TemporaryMovement : MonoBehaviour
 
 		//ShowNumberOfFishes
 		Debug.Log (numberOfFishes);
+		Debug.Log (numberOfRescue);
 
 		// Reset ring
 		ring.isNotDisguised ("tempMove");
