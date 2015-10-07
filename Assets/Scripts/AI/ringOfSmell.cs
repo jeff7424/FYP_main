@@ -152,7 +152,10 @@ public class ringOfSmell : MonoBehaviour {
                 {
                     if (script != null)
                     {
-                        script.stateManager(2);
+						if (script.States != enumStates.trapped)
+						{
+                        	script.stateManager(2);
+						}
                     }
                     if (scriptFatDog != null)
                     {
@@ -192,7 +195,7 @@ public class ringOfSmell : MonoBehaviour {
                 }
                 if (script != null)
                 {
-                    if (script.States != enumStates.chase)
+                    if (script.States != enumStates.chase && script.States != enumStates.trapped)
                     {
                         if (script.turnTowardsSmellTimer <= 0)
                         {

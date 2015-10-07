@@ -12,7 +12,8 @@ public enum enumStates
 	distracted = 5,
 	detectSound = 6,
 	eatBone = 7,
-    smell = 8
+    smell = 8,
+	trapped = 9
 }
 
 public class enemyPathfinding : MonoBehaviour
@@ -808,7 +809,7 @@ public class enemyPathfinding : MonoBehaviour
                        // {
                             // continue towards the soundsource
                             // but change target if the enemy 
-                     //   }
+                     //   }smell
                        // else
                       //  { 
                            // pick this as a new sound
@@ -924,7 +925,19 @@ public class enemyPathfinding : MonoBehaviour
 				}
 			}
             break;
+		case enumStates.trapped:
+		{
+			// Stop the AI
+			agentStopped = true;
+			agent.velocity = Vector3.zero;
+			agent.Stop ();
+			rb.angularVelocity = Vector3.zero;
+			rb.velocity = Vector3.zero;
 
+			// Disable the vision
+			coneOfVisionScript.enabled = false;
+		}
+			break;
             default:
                 break;
         }
