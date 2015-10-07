@@ -1,0 +1,181 @@
+fileFormatVersion: 2
+guid: fed80c7cf98ad7641b018c613d773869
+timeCreated: 1444018322
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: pCylinder15
+    100004: polySurface17
+    100006: polySurface18
+    100008: polySurface19
+    100010: polySurface20
+    100012: polySurface21
+    100014: polySurface22
+    100016: polySurface23
+    100018: polySurface24
+    100020: polySurface25
+    100022: polySurface25 1
+    100024: polySurface26
+    100026: polySurface27
+    100028: polySurface28
+    100030: polySurface29
+    100032: polySurface30
+    100034: transform15
+    100036: transform16
+    100038: transform17
+    100040: transform18
+    100042: transform19
+    100044: transform20
+    100046: transform21
+    100048: transform22
+    100050: transform23
+    100052: transform24
+    100054: transform25
+    100056: transform26
+    100058: transform27
+    100060: transform28
+    100062: transform29
+    100064: Bottle_Single
+    100066: Broken
+    100068: BrokenPieces17
+    100070: BrokenPieces18
+    100072: BrokenPieces19
+    100074: BrokenPieces20
+    100076: BrokenPieces21
+    100078: BrokenPieces22
+    100080: BrokenPieces23
+    100082: BrokenPieces24
+    400000: //RootNode
+    400002: pCylinder15
+    400004: polySurface17
+    400006: polySurface18
+    400008: polySurface19
+    400010: polySurface20
+    400012: polySurface21
+    400014: polySurface22
+    400016: polySurface23
+    400018: polySurface24
+    400020: polySurface25
+    400022: polySurface25 1
+    400024: polySurface26
+    400026: polySurface27
+    400028: polySurface28
+    400030: polySurface29
+    400032: polySurface30
+    400034: transform15
+    400036: transform16
+    400038: transform17
+    400040: transform18
+    400042: transform19
+    400044: transform20
+    400046: transform21
+    400048: transform22
+    400050: transform23
+    400052: transform24
+    400054: transform25
+    400056: transform26
+    400058: transform27
+    400060: transform28
+    400062: transform29
+    400064: Bottle_Single
+    400066: Broken
+    400068: BrokenPieces17
+    400070: BrokenPieces18
+    400072: BrokenPieces19
+    400074: BrokenPieces20
+    400076: BrokenPieces21
+    400078: BrokenPieces22
+    400080: BrokenPieces23
+    400082: BrokenPieces24
+    2300000: polySurface25
+    2300002: Bottle_Single
+    2300004: BrokenPieces17
+    2300006: BrokenPieces18
+    2300008: BrokenPieces19
+    2300010: BrokenPieces20
+    2300012: BrokenPieces21
+    2300014: BrokenPieces22
+    2300016: BrokenPieces23
+    2300018: BrokenPieces24
+    3300000: polySurface25
+    3300002: Bottle_Single
+    3300004: BrokenPieces17
+    3300006: BrokenPieces18
+    3300008: BrokenPieces19
+    3300010: BrokenPieces20
+    3300012: BrokenPieces21
+    3300014: BrokenPieces22
+    3300016: BrokenPieces23
+    3300018: BrokenPieces24
+    4300000: polySurface25
+    4300002: Bottle_Single
+    4300004: BrokenPieces24
+    4300006: BrokenPieces18
+    4300008: BrokenPieces23
+    4300010: BrokenPieces22
+    4300012: BrokenPieces21
+    4300014: BrokenPieces19
+    4300016: BrokenPieces20
+    4300018: BrokenPieces17
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 4
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
