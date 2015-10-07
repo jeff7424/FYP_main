@@ -143,7 +143,7 @@ public class checkPoint: MonoBehaviour
 
 		for (i = 0; i < allBottles.Length; i++)
 		{
-			if (allBottles[i].GetComponent<breakableObject>().brokenPieces == null)
+			if (allBottles[i].GetComponent<breakableObject>() == null)
 			{
 				Debug.Log (allBottles[i]);
 			}
