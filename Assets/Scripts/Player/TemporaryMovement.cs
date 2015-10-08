@@ -39,6 +39,10 @@ public class TemporaryMovement : MonoBehaviour
 	GameObject boneSpawner;
 	GameObject newBone;
 	GameObject newBagOfAir;
+
+	public int maxTraps;
+	public int trapPlaced;
+	public GameObject trap;
 	
 	public bool isGrounded;
 	private bool isEsc;    
@@ -72,6 +76,7 @@ public class TemporaryMovement : MonoBehaviour
 	private float vertical;
 	private float sprintSpeed;
 	private float boneCooldown;
+	private float trapCooldown;
 	private float m_GroundCheckDistance;
 	private float m_OrigGroundCheckDistance;
 	private Vector3 look;
@@ -212,7 +217,16 @@ public class TemporaryMovement : MonoBehaviour
 				boneCooldown = defaultBoneCooldown;
 			}
 		}
-		
+
+		//PutTrap
+		if (Input.GetKeyDown (KeyCode.R) && trapPlaced < maxTraps) {
+			if (playerHidden == false) {
+				Vector3 direction = (boneSpawner.transform.position - transform.position).normalized;
+				Instantiate (trap, boneSpawner.transform.position, Quaternion.identity);
+				trapPlaced++;
+			}
+		}
+
 		if (Input.GetKeyDown(KeyCode.Y) /*&& bags > 0*/) // BAG
 		{
 			boneCoolDown.enabled = false;
@@ -466,7 +480,15 @@ public class TemporaryMovement : MonoBehaviour
 			bonesPlaced--;
 		}
 	}
-	
+
+	public void reduceTrapPlacedNumber()
+	{
+		if (trapPlaced > 0) 
+		{
+			trapPlaced--;
+		}
+	}
+
 	public void resetKeys()
 	{
 		keyPossessed = new int[4];
