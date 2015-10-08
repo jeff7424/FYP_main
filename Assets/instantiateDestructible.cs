@@ -4,7 +4,7 @@ using System.Collections;
 public class instantiateDestructible : MonoBehaviour {
     public GameObject destructible;
     GameObject newDestructible;
-	
+
 	void Start () 
     {
         newDestructible = (GameObject)Instantiate(destructible, this.transform.localPosition, Quaternion.identity);

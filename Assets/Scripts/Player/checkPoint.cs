@@ -131,7 +131,7 @@ public class checkPoint: MonoBehaviour
 //			fatDogScript.Reset ();
 //        }
 		int i = 0;
-
+		
 //		if (allDestructibles.Length > 0) 
 //		{
 //			for (i = 0; i < allDestructibles.Length; i++) 
@@ -141,9 +141,18 @@ public class checkPoint: MonoBehaviour
 //			}
 //		}
 
+		if (allDestructibles.Length > 0) 
+		{
+			for (i = 0; i < allDestructibles.Length; i++) 
+			{
+				destructibleSpawner = allDestructibles[i].GetComponent<instantiateDestructible> ();
+				destructibleSpawner.checkpoint ();
+			}
+		}
+
 		for (i = 0; i < allBottles.Length; i++)
 		{
-			if (allBottles[i].activeInHierarchy)
+			if (allBottles[i].GetComponent<breakableObject>() == null)
 			{
 				Debug.Log (allBottles[i]);
 			}

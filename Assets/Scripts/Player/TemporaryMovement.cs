@@ -171,7 +171,7 @@ public class TemporaryMovement : MonoBehaviour
 				transform.LookAt(transform.position - lookV + lookH, Vector3.up);
 			}
 		}
-		
+
 		if ((Input.GetKeyDown(KeyCode.T) || Input.GetButtonDown("Fire3")) && bones > 0 && bonesPlaced < maxBonesPlaced && boneCooldown <= 0) // BONE
 		{
 			if(playerHidden == false)
@@ -293,7 +293,7 @@ public class TemporaryMovement : MonoBehaviour
 				catAnim.SetBool("isOnGround", false);
 			rb.AddForce(Vector3.down * (grav / 10)); // /10 is just here so that we don't have to enter scary values in the inspector
 		}
-		
+
 		if (onLadder == true/* && catAnim.GetBool ("isOnClimbing") == false*/) 
 		{
 			catAnim.SetBool ("isOnGround", true);

@@ -26,12 +26,11 @@ public class ladderClimbing : MonoBehaviour
 		}
 	}
 		
-	void OnTriggerExit(Collider player)
+	void OnTriggerExit(Collider ladder)
 	{
        // ladder.GetComponent<TemporaryMovement>().onLadder = false;
-		if (player.gameObject.CompareTag ("Player"))
+		if (ladder.gameObject.CompareTag ("Player"))
 		{
-			//characterMovement.enabled = true;
 			characterMovement.onLadder = false;
 			characterMovement.rb.useGravity = true;
             inside = false;
