@@ -132,18 +132,18 @@ public class checkPoint: MonoBehaviour
 //        }
 		int i = 0;
 
-		if (allDestructibles.Length > 0) 
-		{
-			for (i = 0; i < allDestructibles.Length; i++) 
-			{
-				destructibleSpawner = allDestructibles[i].GetComponent<instantiateDestructible> ();
-				destructibleSpawner.checkpoint ();
-			}
-		}
+//		if (allDestructibles.Length > 0) 
+//		{
+//			for (i = 0; i < allDestructibles.Length; i++) 
+//			{
+//				destructibleSpawner = allDestructibles[i].GetComponent<instantiateDestructible> ();
+//				destructibleSpawner.checkpoint ();
+//			}
+//		}
 
 		for (i = 0; i < allBottles.Length; i++)
 		{
-			if (allBottles[i].GetComponent<breakableObject>() == null)
+			if (allBottles[i].activeInHierarchy)
 			{
 				Debug.Log (allBottles[i]);
 			}
@@ -153,14 +153,15 @@ public class checkPoint: MonoBehaviour
 		{
 			for (i = 0; i < allBottles.Length; i++)
 			{
-				if (allBottles[i].GetComponent<breakableObject>() == null)
-				{
-					Debug.Log (allBottles[i]);
-				}
-				bo = allBottles[i].GetComponent<breakableObject>();
-				bo.brokenPieces.SetActive(false);
-				bo.originalObject.SetActive(true);
-				bo.GetComponent<CapsuleCollider>().enabled = true;
+//				if (allBottles[i].GetComponent<breakableObject>() == null)
+//				{
+//					Debug.Log (allBottles[i]);
+//				}
+//				bo = allBottles[i].GetComponent<breakableObject>();
+//				bo.brokenPieces.SetActive(false);
+//				bo.originalObject.SetActive(true);
+//				bo.GetComponent<CapsuleCollider>().enabled = true;
+				allBottles[i].GetComponent<breakableObject>().Reset();
 			}
 		}
 

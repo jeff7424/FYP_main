@@ -19,47 +19,6 @@ public class Wall : MonoBehaviour {
 
 	private Material[] m_InitialMaterialChildren;
 	private Material[] m_InitialMaterialParent;
-	
-//	void Start () 
-//	{
-//		//Get all the renderers
-//		m_Renderers = GetComponentsInChildren<Renderer> ();
-//		//Update length of the array to match with the number of renderer
-//		m_InitialMaterial = new Material[m_Renderers.Length];
-//		transparentMaterial = new Material[m_Renderers.Length];
-//		
-//		
-//		for (int i = 0; i < m_Renderers.Length; i++){
-//			//store the initial material
-//			m_InitialMaterial[i] = m_Renderers[i].material;
-//			
-//			//create a transparent material based on the initial material
-//			transparentMaterial[i] = new Material(m_InitialMaterial[i]);
-//			transparentMaterial[i].SetFloat("_Mode", 2);
-//			transparentMaterial[i].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-//			transparentMaterial[i].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-//			transparentMaterial[i].SetInt("_ZWrite", 0);
-//			transparentMaterial[i].DisableKeyword("_ALPHATEST_ON");
-//			transparentMaterial[i].EnableKeyword("_ALPHABLEND_ON");
-//			transparentMaterial[i].DisableKeyword("_ALPHAPREMULTIPLY_ON");
-//			transparentMaterial[i].renderQueue = 3000;
-//			transparentMaterial[i].SetColor ("_Color", transparenColor);
-//		}
-//	}
-//	
-//	public void SetTransparent()
-//	{
-//		for (int i = 0; i < m_Renderers.Length; i++){
-//			m_Renderers[i].material = transparentMaterial[i];
-//		}
-//	}
-//	
-//	public void SetToNormal()
-//	{
-//		for (int i = 0; i <m_Renderers.Length; i++){
-//			m_Renderers[i].material = m_InitialMaterial[i];
-//		}
-//	}
 
 	void Start () 
 	{
@@ -73,10 +32,6 @@ public class Wall : MonoBehaviour {
         {
             m_RenderersChildren = transform.parent.GetComponentsInChildren<Renderer>();
         }
-        //else if(transform.GetChild(1) != null)
-        //{
-        //    m_RenderersChildren = transform.GetComponentsInChildren<Renderer>();
-        //}
 
         //Get all the renderers
         m_Renderers = GetComponents<Renderer>();
@@ -130,21 +85,6 @@ public class Wall : MonoBehaviour {
                 transparentMaterialChildren[i].SetColor("_Color", transparenColor);
             }
         }
-		/*for (int j = 0; j < m_RenderersParent.Length; j++){
-			//store the initial material
-			m_InitialMaterialParent[j] = m_RenderersParent[j].material;
-
-			transparentMaterialParent[j] = new Material(m_InitialMaterialParent[j]);
-			transparentMaterialParent[j].SetFloat("_Mode", 2);
-			transparentMaterialParent[j].SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-			transparentMaterialParent[j].SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-			transparentMaterialParent[j].SetInt("_ZWrite", 0);
-			transparentMaterialParent[j].DisableKeyword("_ALPHATEST_ON");
-			transparentMaterialParent[j].EnableKeyword("_ALPHABLEND_ON");
-			transparentMaterialParent[j].DisableKeyword("_ALPHAPREMULTIPLY_ON");
-			transparentMaterialParent[j].renderQueue = 3000;
-			transparentMaterialParent[j].SetColor ("_Color", transparenColor);
-		}*/
 	}
 	
 	public void SetTransparent()
@@ -163,12 +103,6 @@ public class Wall : MonoBehaviour {
                 m_Renderers[j].material = transparentMaterial[j];
             }
         }
-
-        //if (m_RenderersParent != null)
-        //    for (int j = 0; j < m_RenderersParent.Length; j++)
-        //    {
-        //        m_RenderersParent[j].material = transparentMaterialParent[j];
-        //    }
 	}
 	
 	public void SetToNormal()
@@ -187,10 +121,5 @@ public class Wall : MonoBehaviour {
 				m_Renderers [j].material = m_InitialMaterial [j];
 			}
 		}
-        //if (m_RenderersParent != null)
-        //for (int j = 0; j <m_RenderersParent.Length; j++){
-        //    m_RenderersParent[j].material = m_InitialMaterialParent[j];
-        //}
-		//StopCoroutine (timerDelay());
 	}
 }

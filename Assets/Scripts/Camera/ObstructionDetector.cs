@@ -34,7 +34,7 @@ public class ObstructionDetector : MonoBehaviour {
 		{
 			RaycastHit hit = rayCastHit[i];
 
-			if (hit.transform.CompareTag ("Wall"))
+			if (hit.transform.CompareTag ("SubFolder") || hit.transform.CompareTag ("Wall") || hit.transform.CompareTag ("Floor"))
 			{
 				Wall wall = hit.transform.GetComponent<Wall>();
 				if (wall)

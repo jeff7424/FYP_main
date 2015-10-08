@@ -20,29 +20,19 @@ public class ladderClimbing : MonoBehaviour
 	{
 		if (player.gameObject.CompareTag ("Player"))
 		{
-			player.GetComponent<TemporaryMovement>().onLadder = true;
-
-			//if (characterMovement.movement.magnitude > 0.5f)
-           // {    
-				characterMovement.rb.useGravity = false;
-				//characterMovement.enabled = false;
-           // }
-//            else
-//            {
-//				characterMovement.rb.useGravity = true;
-//				characterMovement.enabled = true;
-//            }
-			//inside = !inside;
-            inside = true;
+			characterMovement.onLadder = true;
+			characterMovement.rb.useGravity = false;
+			inside = true;
 		}
 	}
 		
-	void OnTriggerExit(Collider ladder)
+	void OnTriggerExit(Collider player)
 	{
        // ladder.GetComponent<TemporaryMovement>().onLadder = false;
-		if (ladder.gameObject.CompareTag ("Player"))
+		if (player.gameObject.CompareTag ("Player"))
 		{
-			characterMovement.enabled = true;
+			//characterMovement.enabled = true;
+			characterMovement.onLadder = false;
 			characterMovement.rb.useGravity = true;
             inside = false;
 		}
@@ -54,7 +44,6 @@ public class ladderClimbing : MonoBehaviour
 		{
 			characterMovement.transform.position += Vector3.up * characterMovement.movementSpeed * Time.deltaTime * characterMovement.movement.magnitude;
 		}
-
         //print("MAGNITUDE: " + characterController.GetComponent<TemporaryMovement>().movement.magnitude);
 	}
 }

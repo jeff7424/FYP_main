@@ -8,7 +8,7 @@ public class breakableObject: MonoBehaviour
     public bool makeSound = false;
     public float timer;
 	public float defaultTimer = 1.0f;
-    public float expireTimer = 10.0f;
+	public float defaultExpireTimer = 10.0f;
     public float boneRadius;
     public float ballRadius;
     public float cubeRadius;
@@ -22,6 +22,7 @@ public class breakableObject: MonoBehaviour
 
 	private bool isGrounded;
 	private bool broken;
+	private float expireTimer;
 	private float m_GroundCheckDistance;
 	private GameObject newSphere;
 	private GameObject brokenObject;
@@ -38,7 +39,6 @@ public class breakableObject: MonoBehaviour
         if (this.gameObject.CompareTag ("Bottle")) 
 		{
 			maxScale = 15.0f;
-			expireTimer = 1.0f;
 		} 
 		else if (this.gameObject.CompareTag ("Glass")) 
 		{
@@ -49,6 +49,7 @@ public class breakableObject: MonoBehaviour
 			maxScale = 50.0f;
 		}
 
+		expireTimer = defaultExpireTimer;
 		timer = defaultTimer;
 
         playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<TemporaryMovement>();
@@ -65,10 +66,11 @@ public class breakableObject: MonoBehaviour
 			brokenPieces.SetActive (false);
 		}
 
-        if (GetComponent<Rigidbody>() != null)
-        {
-            rb = GetComponent<Rigidbody>();
-        }
+		if (GetComponent<Rigidbody>() != null)
+		{
+			rb = GetComponent<Rigidbody>();
+		}
+
 		newSphere = (GameObject)Instantiate (Sphere, this.transform.position, Quaternion.identity);
 		newSphere.transform.parent = transform;
 		newSphere.SetActive (false);
@@ -170,62 +172,40 @@ public class breakableObject: MonoBehaviour
         //----------------------------------------------------------//
         // When object falls to the ground it creates a sound sphere//
         //----------------------------------------------------------//
-//        if (Other.gameObject.CompareTag ("Player")) {
-//			//rb.AddRelativeForce (playerMovement.transform.forward * playerMovement.movementSpeed, ForceMode.Force);
-//			//rb.velocity = playerMovement.transform.forward * playerMovement.movementSpeed;
-//			//makeSound = true;
-//		} else {
-//			if (originalObject != null && brokenPieces != null) {
-//				Debug.Log (rb.velocity.magnitude);
-//				if (rb.velocity.magnitude > 3.0f) {
-//					brokenPieces.transform.position = originalObject.transform.position;
-//					brokenPieces.transform.rotation = originalObject.transform.rotation;
-//					originalObject.SetActive (false);
-//					brokenPieces.SetActive (true);
-//					makeSound = true;
-//				}
-//			}
-//		}
-//        if (this.transform.position.y <= 0.5f && makeSound == true)
-//        {
-//            //makeSound = false;
-//            {
-//                objectBreaking();
-//				SFX.playGlassBreak();
-//            }
-//        }
-		if (Other.gameObject.CompareTag ("Player")) {
+		if (Other.gameObject.CompareTag ("Player")) 
+		{
 			//rb.AddRelativeForce (playerMovement.transform.forward * playerMovement.movementSpeed, ForceMode.Force);
-			if (brokenPieces.activeInHierarchy) {
+			if (brokenPieces.activeInHierarchy) 
+			{
 				Physics.IgnoreCollision (Other.collider, originalObject.GetComponent<Collider> ());
-			} else {
+			} 
+			else 
+			{
 				rb.AddForce (playerMovement.transform.right * playerMovement.movementSpeed * playerMovement.magnMultiplier);
 			}
 			//makeSound = true;
-		} else if (Other.gameObject.CompareTag ("Enemy")) {
+		} 
+		else if (Other.gameObject.CompareTag ("Enemy")) 
+		{
 			Physics.IgnoreCollision (Other.collider, originalObject.GetComponent<Collider>());
 		}
 		else if (Other.gameObject.CompareTag ("Floor"))
 		{
-			objectBreaking();
+			MakeSound();
 			if (originalObject != null && brokenPieces != null)
 			{
 				if (rb.velocity.magnitude > 1.0f)
 				{
 					brokenPieces.transform.position = originalObject.transform.position;
 					originalObject.GetComponent<Renderer>().enabled = false;
-					originalObject.GetComponent<Rigidbody>().Sleep ();
+					rb.useGravity = false;
+					originalObject.GetComponent<CapsuleCollider>().enabled = false;
 					brokenPieces.SetActive (true);
 					broken = true;
 				}
 			}
 		}
     }
-
-	void OnCollisionStay(Collision other)
-	{
-
-	}
 
     public void ObjectFalling()
     {    
@@ -241,11 +221,11 @@ public class breakableObject: MonoBehaviour
 		} 
 		else 
 		{
-			gameObject.SetActive(false);
+			brokenPieces.SetActive (false);
 		}
     }
 
-    public void objectBreaking()
+    public void MakeSound()
     {
         if (this.gameObject.CompareTag ("Bottle") || this.gameObject.CompareTag ("Jar"))
         {
@@ -292,6 +272,29 @@ public class breakableObject: MonoBehaviour
 //            destroySelf();
 //        }
     }
+
+	public void Reset()
+	{
+		originalObject.transform.localPosition = Vector3.zero;
+		originalObject.transform.localRotation = Quaternion.identity;
+
+		// Reset broken pieces position
+		brokenPieces.SetActive (true);
+		for (int i = 0; i < brokenPieces.transform.childCount; i++) 
+		{
+			brokenPieces.transform.GetChild(i).transform.localPosition = Vector3.zero;
+		}
+		expireTimer = 3.0f;
+		broken = false;
+		originalObject.GetComponent<Renderer>().enabled = true;
+		originalObject.GetComponent<CapsuleCollider> ().enabled = true;
+		rb.WakeUp ();
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+		rb.useGravity = true;
+		originalObject.SetActive (true);
+		brokenPieces.SetActive (false);
+	}
 
     void checkGroundStatus()
     {
